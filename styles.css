@@ -4753,6 +4753,273 @@ body.ticket-open .footer {
   color: rgba(42,23,18,.62);
 }
 
+.resume-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.resume-main {
+  position: relative;
+  isolation: isolate;
+  width: min(1120px, 92vw);
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 6rem) 0 clamp(4rem, 8vw, 7rem);
+}
+
+.resume-nav {
+  color: var(--espresso);
+}
+
+.resume-hero {
+  position: relative;
+  z-index: 3;
+  max-width: 900px;
+  margin: 0 auto clamp(2rem, 5vw, 3.2rem);
+  text-align: center;
+}
+
+.resume-hero p {
+  margin: 0 0 .65rem;
+  color: rgba(104,31,45,.72);
+  font: 12px var(--mono);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.resume-hero h1 {
+  margin: 0;
+  color: rgba(42,23,18,.92);
+  font: clamp(3.4rem, 10vw, 8rem) / .82 var(--display);
+}
+
+.resume-hero h1 span {
+  display: block;
+  margin-top: .35rem;
+  color: rgba(104,31,45,.78);
+  font: 700 clamp(1.4rem, 4vw, 2.3rem) / .9 var(--hand);
+}
+
+.resume-contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .6rem;
+  margin-top: 1.3rem;
+}
+
+.resume-contact span,
+.resume-contact a {
+  padding: .62rem .82rem;
+  border: 1px dashed rgba(104,31,45,.18);
+  border-radius: 999px;
+  background: rgba(255,250,237,.54);
+  color: rgba(42,23,18,.62);
+  font: 11px var(--mono);
+}
+
+.resume-card {
+  position: relative;
+  z-index: 2;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border: 1px solid rgba(92,50,32,.1);
+  border-radius: 12px 12px 18px 10px;
+  background:
+    radial-gradient(circle, rgba(42,23,18,.04) .6px, transparent .95px),
+    linear-gradient(145deg, rgba(255,250,237,.92), rgba(239,222,197,.78));
+  background-size: 13px 13px, auto;
+  box-shadow: 0 28px 72px rgba(42,23,18,.13), inset 0 1px 0 rgba(255,255,255,.58);
+  transform: rotate(var(--resume-r, 0deg));
+  transition: transform .45s cubic-bezier(.18,.9,.18,1), box-shadow .45s ease;
+}
+
+.resume-card:hover {
+  z-index: 6;
+  box-shadow: 0 38px 90px rgba(42,23,18,.17), 0 0 48px rgba(255,226,167,.18);
+  transform: translateY(-5px) rotate(0deg);
+}
+
+.resume-profile {
+  width: min(820px, 100%);
+  margin: 0 auto 1.4rem;
+  --resume-r: -1.1deg;
+}
+
+.resume-profile > p:last-child {
+  max-width: 65ch;
+  margin: 0;
+  color: rgba(42,23,18,.68);
+  font: 1.05rem / 1.75 var(--body);
+}
+
+.resume-experience {
+  --resume-r: .8deg;
+  margin-bottom: 1.4rem;
+}
+
+.resume-section-number {
+  margin: 0 0 1rem;
+  color: rgba(104,31,45,.7);
+  font: 12px var(--mono);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.resume-timeline {
+  display: grid;
+  gap: .85rem;
+}
+
+.resume-role {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(160px, auto);
+  gap: 1rem;
+  align-items: start;
+  padding: .95rem 0;
+  border-top: 1px dashed rgba(42,23,18,.14);
+}
+
+.resume-role:first-child {
+  border-top: 0;
+}
+
+.resume-role h2,
+.resume-list h2 {
+  margin: 0;
+  color: rgba(42,23,18,.82);
+  font: 700 clamp(1.15rem, 2.8vw, 1.55rem) / .92 var(--hand);
+}
+
+.resume-role p,
+.resume-list p {
+  margin: .28rem 0 0;
+  color: rgba(42,23,18,.62);
+  font: .98rem / 1.55 var(--body);
+}
+
+.resume-role > span {
+  justify-self: end;
+  color: rgba(104,31,45,.68);
+  font: 11px / 1.45 var(--mono);
+  text-align: right;
+}
+
+.resume-role-featured {
+  align-items: stretch;
+  padding: 1.15rem;
+  border: 1px solid rgba(104,31,45,.13);
+  border-radius: 12px;
+  background: rgba(255,247,189,.34);
+}
+
+.resume-achievements {
+  grid-column: 1 / -1;
+  margin-top: .35rem;
+}
+
+.resume-achievements h3 {
+  margin: 0 0 .55rem;
+  color: rgba(104,31,45,.72);
+  font: 700 1.18rem / .95 var(--hand);
+}
+
+.resume-achievements ul,
+.resume-tags {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.resume-achievements li {
+  position: relative;
+  margin-top: .42rem;
+  padding-left: 1.1rem;
+  color: rgba(42,23,18,.65);
+  font: .95rem / 1.55 var(--body);
+}
+
+.resume-achievements li::before {
+  content: "♡";
+  position: absolute;
+  left: 0;
+  color: rgba(104,31,45,.62);
+  font-family: var(--hand);
+}
+
+.resume-lower-grid {
+  display: grid;
+  grid-template-columns: 1.25fr .85fr;
+  gap: 1.4rem;
+}
+
+.resume-lower-grid .resume-card:nth-child(1) {
+  grid-row: span 2;
+  --resume-r: -1deg;
+}
+
+.resume-lower-grid .resume-card:nth-child(2) {
+  --resume-r: 1.2deg;
+}
+
+.resume-lower-grid .resume-card:nth-child(3) {
+  --resume-r: -.7deg;
+}
+
+.resume-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.resume-list article {
+  padding-top: .85rem;
+  border-top: 1px dashed rgba(42,23,18,.14);
+}
+
+.resume-list article:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.resume-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+}
+
+.resume-tags li {
+  padding: .55rem .72rem;
+  border: 1px dashed rgba(42,23,18,.18);
+  border-radius: 999px;
+  background: rgba(251,242,223,.72);
+  color: rgba(42,23,18,.64);
+  font: 11px var(--mono);
+}
+
+.resume-languages {
+  margin: 0;
+  color: rgba(42,23,18,.72);
+  font: 700 1.3rem / 1.15 var(--hand);
+}
+
+.resume-paper-one {
+  left: -5%;
+  top: 13%;
+  width: min(380px, 44vw);
+  height: 420px;
+  transform: rotate(-7deg);
+}
+
+.resume-paper-two {
+  right: -5%;
+  bottom: 6%;
+  width: min(460px, 50vw);
+  height: 460px;
+  transform: rotate(5deg);
+}
+
+.resume-heart { left: 1%; top: 9%; font-size: 3rem; transform: rotate(-13deg); }
+.resume-star { right: 6%; top: 17%; font-size: 2rem; color: rgba(139,143,95,.72); animation-delay: -2s; }
+.resume-arrow { left: 51%; bottom: 1%; font-size: 1.8rem; transform: rotate(10deg); animation-delay: -4s; }
+
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
 .reveal.in-view { opacity: 1; transform: translateY(0); }
 .float-card.reveal { transform: rotate(var(--r)) translateY(20px); }
@@ -4968,6 +5235,39 @@ body.ticket-open .footer {
 
   .privacy-paper,
   .privacy-doodle {
+    display: none;
+  }
+
+  .resume-main {
+    width: min(100% - 2rem, 680px);
+    padding-top: 2.5rem;
+  }
+
+  .resume-contact,
+  .resume-role,
+  .resume-lower-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-role > span {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .resume-card,
+  .resume-profile,
+  .resume-experience,
+  .resume-lower-grid .resume-card:nth-child(1),
+  .resume-lower-grid .resume-card:nth-child(2),
+  .resume-lower-grid .resume-card:nth-child(3) {
+    transform: none;
+  }
+
+  .resume-paper-one,
+  .resume-paper-two,
+  .resume-heart,
+  .resume-star,
+  .resume-arrow {
     display: none;
   }
 }
