@@ -4558,8 +4558,7 @@ body.ticket-open .footer {
   gap: .75rem;
 }
 
-.privacy-back,
-.theme-toggle {
+.privacy-back {
   display: inline-flex;
   align-items: center;
   min-height: 42px;
@@ -4574,12 +4573,7 @@ body.ticket-open .footer {
   text-transform: lowercase;
 }
 
-.theme-toggle {
-  cursor: pointer;
-}
-
-.privacy-back:hover,
-.theme-toggle:hover {
+.privacy-back:hover {
   background: rgba(255,247,189,.82);
   text-decoration: none;
   transform: translateY(-1px);
@@ -4757,45 +4751,6 @@ body.ticket-open .footer {
   justify-content: center;
   gap: 1rem;
   color: rgba(42,23,18,.62);
-}
-
-.privacy-page.dark-mode {
-  --paper: #201b18;
-  background-color: #201b18;
-  background-image:
-    radial-gradient(ellipse at 18% 12%, rgba(214,165,167,.12), transparent 24%),
-    radial-gradient(ellipse at 82% 18%, rgba(255,246,226,.08), transparent 22%),
-    linear-gradient(180deg, #201b18 0%, #2a1712 60%, #17110f 100%);
-  color: rgba(255,246,226,.88);
-}
-
-.privacy-page.dark-mode .privacy-nav,
-.privacy-page.dark-mode .privacy-hero h1,
-.privacy-page.dark-mode .footer {
-  color: rgba(255,246,226,.9);
-}
-
-.privacy-page.dark-mode .privacy-back,
-.privacy-page.dark-mode .theme-toggle,
-.privacy-page.dark-mode .privacy-section,
-.privacy-page.dark-mode .privacy-meta {
-  border-color: rgba(255,246,226,.16);
-  background: rgba(42,23,18,.72);
-  color: rgba(255,246,226,.78);
-}
-
-.privacy-page.dark-mode .privacy-section p {
-  color: rgba(255,246,226,.72);
-}
-
-.privacy-page.dark-mode .privacy-title,
-.privacy-page.dark-mode .privacy-section a,
-.privacy-page.dark-mode .privacy-hero p {
-  color: rgba(255,196,181,.9);
-}
-
-.privacy-page.dark-mode .privacy-paper {
-  opacity: .34;
 }
 
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
@@ -4988,8 +4943,7 @@ body.ticket-open .footer {
     gap: .55rem;
   }
 
-  .privacy-back,
-  .theme-toggle {
+  .privacy-back {
     justify-content: center;
     width: 100%;
   }
