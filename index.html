@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MarMel — Creative Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Bagel+Fat+One&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Gaegu:wght@400;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=138" />
+</head>
+<body>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <nav class="nav">
+    <a class="nav-logo" href="#top">MarMel</a>
+    <div class="nav-links" aria-label="Primary navigation">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#playground">Playground</a>
+      <a href="CV.pdf" target="_blank" rel="noopener">Resume</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-center">
+        <img class="hero-logo" src="MarMel.png" alt="MarMel" />
+      </div>
+
+      <div class="hero-right" aria-label="Creative desk collage">
+        <img class="hero-illus illus-one" src="HeroIllus/illus1.png" alt="" aria-hidden="true" />
+        <img class="hero-illus illus-two" src="HeroIllus/illus2.png" alt="" aria-hidden="true" />
+        <img class="hero-illus illus-three" src="HeroIllus/illus3.png" alt="" aria-hidden="true" />
+        <img class="hero-illus illus-four" src="HeroIllus/illus4.png" alt="" aria-hidden="true" />
+        <img class="hero-illus illus-five" src="HeroIllus/illus5.png" alt="" aria-hidden="true" />
+        <span class="fun-bit fun-heart" aria-hidden="true">♡</span>
+        <span class="fun-bit fun-wow" aria-hidden="true">wow</span>
+        <span class="fun-bit fun-smile" aria-hidden="true">:)</span>
+        <span class="fun-bit fun-scribble" aria-hidden="true"></span>
+        <span class="fun-bit fun-dotline" aria-hidden="true"></span>
+        <span class="desk-layer coffee-stain" aria-hidden="true"></span>
+        <span class="desk-layer paperclip" aria-hidden="true"></span>
+        <span class="desk-layer loading-note" aria-hidden="true">loading feelings...</span>
+        <span class="desk-layer desk-arrow" aria-hidden="true">ticket to the brain →</span>
+        <span class="doodle doodle-star" style="--x: 29%; --y: 14%; --r: -12deg;">✶</span>
+        <span class="doodle doodle-note" style="--x: 54%; --y: 31%; --r: 8deg;">little idea</span>
+        <span class="doodle doodle-arrow" style="--x: 35%; --y: 63%; --r: -18deg;">↗</span>
+        <span class="doodle doodle-ring" style="--x: 78%; --y: 43%; --r: 12deg;"></span>
+        <span class="doodle doodle-spark" style="--x: 22%; --y: 48%; --r: 18deg;">+ +</span>
+
+        <article class="float-card profile-card hanging-badge draggable" style="--x: clamp(1.6rem, 7vw, 6rem); --y: 5rem; --r: -2deg;">
+          <span class="badge-nail"></span>
+          <span class="badge-string"></span>
+          <div class="badge-inner">
+            <div class="badge-photo">
+              <img class="photo-real" src="me.jpeg" alt="Mara Melkonyan" />
+              <img class="photo-cartoon" src="me-cartoon.png" alt="Cartoon portrait of Mara Melkonyan" />
+              <img class="photo-cartoon photo-cartoon-alt" src="me-cartoon2.png" alt="Second cartoon portrait of Mara Melkonyan" />
+            </div>
+            <p>Mara Melkonyan · UX/UI + Graphic Designer</p>
+          </div>
+        </article>
+        <span class="desk-layer badge-background-quote" aria-hidden="true">good design speaks without translation</span>
+        <a class="journey-button" href="mailto:melkonyan.designer@gmail.com" aria-label="Email Mara to start your journey">
+          <span class="journey-icon" aria-hidden="true"></span>
+          <span>Start your journey</span>
+        </a>
+
+        <button class="ticket-card" type="button" aria-label="Open Mara's creative ticket">
+          <img src="ticket.png" alt="Selected work ticket" />
+        </button>
+
+        <article class="float-card sticker-card draggable" style="--x: 44%; --y: 14%; --r: -10deg;">
+          <span>tiny thoughts</span>
+        </article>
+
+        <article class="float-card diary-card draggable" style="--x: 42%; --y: 68%; --r: 5deg;">
+          <small>today's note</small>
+          <strong>make it feel alive.</strong>
+        </article>
+
+        <article class="float-card playlist-card draggable" style="--x: 72%; --y: 62%; --r: 4deg;">
+          <div class="record-player" aria-hidden="true">
+            <div class="record">
+              <span></span>
+            </div>
+            <div class="tone-arm"></div>
+          </div>
+          <div class="playlist-meta">
+            <small>Now playing</small>
+            <span>marmel.fm</span>
+          </div>
+          <button class="playlist-toggle" type="button" aria-label="Play soft focus playlist" aria-pressed="false">
+            <span class="play-icon"></span>
+            <span class="pause-bars"><i></i><i></i></span>
+          </button>
+          <div class="sound-bars" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <audio id="soft-focus-audio" preload="auto" loop>
+            <source src="music.mp3" type="audio/mpeg" />
+          </audio>
+        </article>
+      </div>
+    </section>
+
+    <div class="ticket-expanded" id="ticket-expanded" aria-hidden="true">
+      <button class="ticket-backdrop" type="button" aria-label="Close expanded ticket"></button>
+      <article class="ticket-panel" role="dialog" aria-modal="true" aria-label="Creative boarding pass ticket">
+        <button class="ticket-close" type="button" aria-label="Close ticket">×</button>
+        <img class="ticket-panel-image" src="ticket.png" alt="Creative boarding pass ticket" />
+      </article>
+    </div>
+
+    <section class="about about-canvas" id="about">
+      <span class="about-glow" aria-hidden="true"></span>
+      <span class="about-coffee about-coffee-one" aria-hidden="true"></span>
+      <span class="about-coffee about-coffee-two" aria-hidden="true"></span>
+      <img class="about-thisisme" src="About/thisisme.png" alt="This is me" />
+
+      <article class="about-browser">
+        <div><span></span><span></span><span></span></div>
+        <p>tiny interactions matter</p>
+        <i></i><i></i>
+      </article>
+
+      <article class="about-wireframe">
+        <small>ui sketch</small>
+        <span></span><span></span><span></span>
+      </article>
+
+      <article class="about-love-note" aria-label="Little things I love">
+        <p>little things i love ♥</p>
+        <ul>
+          <li>collecting beautiful interfaces</li>
+          <li>late night walks with music</li>
+          <li>making random moodboards</li>
+          <li>strong black coffee</li>
+          <li>romanticizing ordinary moments</li>
+          <li>taking photos of tiny details</li>
+          <li>playlists that feel like movies</li>
+          <li>turning chaos into something soft</li>
+        </ul>
+      </article>
+
+      <span class="about-clip about-clip-one" aria-hidden="true"></span>
+      <span class="about-clip about-clip-two" aria-hidden="true"></span>
+      <span class="about-doodle doodle-heart" aria-hidden="true">♡</span>
+      <span class="about-doodle doodle-stars" aria-hidden="true">✶ ✦</span>
+      <span class="about-doodle doodle-arrow" aria-hidden="true">↗</span>
+      <span class="about-doodle doodle-calm" aria-hidden="true">:)</span>
+
+      <span class="paw-trail" aria-hidden="true">
+        <span class="paw-print paw-one"></span>
+        <span class="paw-print paw-two"></span>
+        <span class="paw-print paw-three"></span>
+        <span class="paw-print paw-four"></span>
+        <span class="paw-print paw-five"></span>
+        <span class="paw-print paw-six"></span>
+        <span class="paw-print paw-seven"></span>
+        <span class="paw-print paw-eight"></span>
+        <span class="paw-print paw-nine"></span>
+        <span class="paw-print paw-ten"></span>
+        <span class="paw-print paw-eleven"></span>
+        <span class="paw-print paw-twelve"></span>
+        <span class="paw-print paw-thirteen"></span>
+        <span class="paw-print paw-fourteen"></span>
+        <span class="paw-print paw-fifteen"></span>
+        <span class="paw-print paw-sixteen"></span>
+      </span>
+      <span class="paw-trail paw-trail-top" aria-hidden="true">
+        <span class="paw-print paw-top-one"></span>
+        <span class="paw-print paw-top-two"></span>
+        <span class="paw-print paw-top-three"></span>
+        <span class="paw-print paw-top-four"></span>
+        <span class="paw-print paw-top-five"></span>
+      </span>
+
+      <img class="about-cat-gif" src="About/cat.gif" alt="" aria-hidden="true" />
+
+      <img class="about-book" src="About/book.png" alt="Open scrapbook notebook" />
+    </section>
+
+    <section class="work" id="work">
+      <div class="project-board">
+        <div class="board-canvas">
+          <div class="memory-os-bar" aria-hidden="true">
+            <span class="memory-os-name">midnight desktop</span>
+            <span>file</span>
+            <span>feelings</span>
+            <span>unfinished ideas</span>
+          </div>
+          <span class="archive-glow" aria-hidden="true"></span>
+          <span class="archive-grain" aria-hidden="true"></span>
+          <div class="workspace-thoughts" aria-hidden="true">
+            <span class="thought-particle thought-particle-one"></span>
+            <span class="thought-particle thought-particle-two"></span>
+            <span class="thought-window thought-window-tabs">
+              <i></i>
+              <b>14 tabs open</b>
+              <small>3 unfinished ideas</small>
+              <small>1 emotional breakthrough</small>
+            </span>
+            <span class="thought-window thought-window-mode">
+              <em></em>
+              <b>late night mode enabled</b>
+              <small>autosaved feelings</small>
+            </span>
+          </div>
+          <img class="work-comp-preview" src="Works/comp.png" alt="" aria-hidden="true" />
+          <span class="work-comp-paws" aria-hidden="true">
+            <span class="desktop-paw work-paw-one"></span>
+            <span class="desktop-paw work-paw-two"></span>
+            <span class="desktop-paw work-paw-three"></span>
+            <span class="desktop-paw work-paw-four"></span>
+          </span>
+          <img class="work-folder-cat" src="Works/caty.gif" alt="" aria-hidden="true" />
+          <a class="project-card desktop-folder product impact" href="https://www.behance.net/gallery/244905297/Media-Monitoring-UXUI" target="_blank" rel="noopener" data-project="SPROOT" aria-label="Open SPROOT project" style="--top: 14%; --left: 8%; --r: -4deg; --s: 1; --w: 132px; --float: 0; --folder-top: #dfc99e; --folder-bottom: #b99467; --folder-tab-top: #ead9b5; --folder-tab-bottom: #c7a575; --folder-border: rgba(107, 73, 43, .24);">
+            <span class="folder-icon" aria-hidden="true"></span>
+            <strong>SPROOT</strong>
+          </a>
+
+          <a class="project-card desktop-folder product impact" href="https://www.behance.net/gallery/243719865/iCrush-WEB3-BRAND-IDENTITY-UXUI-DESIGN" target="_blank" rel="noopener" data-project="ICRUSH" aria-label="Open ICRUSH project" style="--top: 34%; --left: 7%; --r: 2.5deg; --s: .98; --w: 132px; --float: 1; --folder-top: #d8a8ac; --folder-bottom: #ad737c; --folder-tab-top: #e5bcc0; --folder-tab-bottom: #bf858e; --folder-border: rgba(101, 48, 56, .22);">
+            <span class="folder-icon" aria-hidden="true"></span>
+            <strong>ICRUSH</strong>
+          </a>
+
+          <a class="project-card desktop-folder lens merch" href="https://www.behance.net/gallery/162852245/-Love" target="_blank" rel="noopener" data-project="DE SOI" aria-label="Open DE SOI project" style="--top: 55%; --left: 9%; --r: -2deg; --s: 1; --w: 132px; --float: 2; --folder-top: #bdc59b; --folder-bottom: #87906c; --folder-tab-top: #d0d7ad; --folder-tab-bottom: #9ba47b; --folder-border: rgba(72, 80, 50, .23);">
+            <span class="folder-icon" aria-hidden="true"></span>
+            <strong>DE SOI</strong>
+          </a>
+
+          <a class="project-card desktop-folder product ai" href="https://www.behance.net/gallery/249514517/Vaultwin-Blockchain-Identity-UXUI-Graphic-Design" target="_blank" rel="noopener" data-project="VAULTWIN" aria-label="Open VAULTWIN project" style="--top: 73%; --left: 7.5%; --r: 3.5deg; --s: .99; --w: 140px; --float: 3; --folder-top: #8d778f; --folder-bottom: #5f4a63; --folder-tab-top: #a08ba2; --folder-tab-bottom: #705b74; --folder-border: rgba(65, 45, 68, .24); --folder-label-bg: rgba(251, 242, 223, .58); --folder-label-color: rgba(42, 23, 18, .78);">
+            <span class="folder-icon" aria-hidden="true"></span>
+            <strong>VAULTWIN</strong>
+          </a>
+
+          <a class="project-card desktop-folder product impact" href="https://www.behance.net/gallery/244905297/Media-Monitoring-UXUI" target="_blank" rel="noopener" data-project="SPROOT" aria-label="Open duplicated SPROOT project" style="--top: 16%; --left: 22%; --r: 1.5deg; --s: .97; --w: 132px; --float: 4; --folder-top: #a7bec0; --folder-bottom: #6f9398; --folder-tab-top: #bfd0d0; --folder-tab-bottom: #86a8ac; --folder-border: rgba(47, 82, 87, .23);">
+            <span class="folder-icon" aria-hidden="true"></span>
+            <strong>SPROOT</strong>
+          </a>
+
+          <a class="project-card desktop-folder product impact" href="https://www.behance.net/gallery/243719865/iCrush-WEB3-BRAND-IDENTITY-UXUI-DESIGN" target="_blank" rel="noopener" data-project="ICRUSH" aria-label="Open duplicated ICRUSH project" style="--top: 36%; --left: 21%; --r: -3deg; --s: 1; --w: 132px; --float: 5; --folder-top: #d1a384; --folder-bottom: #a86c55; --folder-tab-top: #dfb99d; --folder-tab-bottom: #ba8065; --folder-border: rgba(104, 55, 38, .24);">
+            <span class="folder-icon" aria-hidden="true"></span>
+            <strong>ICRUSH</strong>
+          </a>
+
+          <a class="project-card desktop-folder lens merch" href="https://www.behance.net/gallery/162852245/-Love" target="_blank" rel="noopener" data-project="DE SOI" aria-label="Open duplicated DE SOI project" style="--top: 57%; --left: 23%; --r: 2deg; --s: .98; --w: 132px; --float: 6; --folder-top: #aeb2d0; --folder-bottom: #747a9e; --folder-tab-top: #c3c6dc; --folder-tab-bottom: #8b90b0; --folder-border: rgba(61, 66, 104, .22);">
+            <span class="folder-icon" aria-hidden="true"></span>
+            <strong>DE SOI</strong>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="scrapbook-section" id="playground">
+      <img class="capture-edge-decoration" src="Playground/capture.png" alt="" aria-hidden="true" />
+
+      <div class="section-heading scrapbook-heading">
+        <p>Photo wall</p>
+        <h2>Capturing moments</h2>
+        <p class="section-subtitle">A cinematic scrapbook of saved fragments, half-remembered places, and soft little feelings.</p>
+      </div>
+
+      <div class="scrapbook-stage" aria-label="Scrapbook style photo gallery">
+        <span class="scrapbook-dust dust-one" aria-hidden="true"></span>
+        <span class="scrapbook-dust dust-two" aria-hidden="true"></span>
+        <span class="scrapbook-dust dust-three" aria-hidden="true"></span>
+        <span class="paper-layer layer-one" aria-hidden="true"></span>
+        <span class="paper-layer layer-two" aria-hidden="true"></span>
+        <span class="paper-layer layer-three" aria-hidden="true"></span>
+
+        <div class="browser-memory-tab tab-one" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <b>memories/index.html</b>
+        </div>
+        <div class="browser-memory-tab tab-two" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <b>late-night-notes.txt</b>
+        </div>
+
+        <article class="memory-piece polaroid memory-one reveal" tabindex="0">
+          <span class="photo-tape tape-left" aria-hidden="true"></span>
+          <img src="https://picsum.photos/id/1060/640/820" alt="Stock placeholder photo of a cozy cafe table" />
+          <div class="memory-caption">
+            <small>cafe / 11:42 pm</small>
+            <p>this cafe smelled like cinnamon</p>
+          </div>
+          <span class="memory-hover-note">designed half the project here</span>
+        </article>
+
+        <article class="memory-piece taped-photo memory-two reveal" tabindex="0">
+          <span class="photo-tape tape-top" aria-hidden="true"></span>
+          <img src="https://picsum.photos/id/1043/760/540" alt="Stock placeholder photo of a warm city evening" />
+          <span class="memory-hover-note">saved from a blurry night</span>
+        </article>
+
+        <article class="memory-piece polaroid small-polaroid memory-three reveal" tabindex="0">
+          <img src="https://picsum.photos/id/1027/560/720" alt="Stock placeholder portrait photo" />
+          <div class="memory-caption">
+            <small>soft proof</small>
+            <p>almost deleted this one</p>
+          </div>
+        </article>
+
+        <article class="memory-piece taped-photo memory-four reveal" tabindex="0">
+          <span class="photo-tape tape-corner" aria-hidden="true"></span>
+          <img src="https://picsum.photos/id/1011/760/620" alt="Stock placeholder photo of a road through mountains" />
+          <span class="memory-hover-note">tiny moments that stayed</span>
+        </article>
+
+        <div class="film-strip memory-film reveal" tabindex="0">
+          <span><img src="https://picsum.photos/id/1035/240/180" alt="Stock placeholder landscape film frame" /></span>
+          <span><img src="https://picsum.photos/id/1067/240/180" alt="Stock placeholder evening film frame" /></span>
+          <span><img src="https://picsum.photos/id/1080/240/180" alt="Stock placeholder travel film frame" /></span>
+          <em>playlist: songs for walking home</em>
+        </div>
+
+        <div class="hand-note note-one reveal" tabindex="0">
+          <span>03:18</span>
+          <p>kept this because the light felt honest.</p>
+        </div>
+        <div class="hand-note note-two reveal" tabindex="0">
+          <span>saved feeling</span>
+          <p>the kind of quiet that makes everything softer.</p>
+        </div>
+        <div class="hand-note note-three reveal" tabindex="0">
+          <span>place</span>
+          <p>somewhere between a deadline and a daydream.</p>
+        </div>
+
+        <span class="scrap-doodle doodle-memory-heart" aria-hidden="true">♡</span>
+        <span class="scrap-doodle doodle-memory-star" aria-hidden="true">✶</span>
+        <span class="scrap-doodle doodle-memory-arrow" aria-hidden="true">↗</span>
+        <span class="scrap-doodle doodle-memory-loop" aria-hidden="true"></span>
+        <article class="memory-piece polaroid wide-polaroid memory-five reveal" tabindex="0">
+          <span class="photo-tape tape-right" aria-hidden="true"></span>
+          <img src="https://picsum.photos/id/1056/760/540" alt="Stock placeholder photo of a misty landscape" />
+          <div class="memory-caption">
+            <small>somewhere warm</small>
+            <p>tiny moments that stayed</p>
+          </div>
+          <span class="memory-hover-note">kept for the feeling, not the focus</span>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© <span id="footer-year">2026</span> MarMel</span>
+    <a href="Resume.pdf" target="_blank" rel="noopener">Resume</a>
+    <a href="privacy.html" target="_blank" rel="noopener">Privacy</a>
+  </footer>
+
+  <section class="case-window-layer" id="case-window-layer" aria-hidden="true">
+    <article class="case-window" id="case-window" role="dialog" aria-modal="false" aria-labelledby="case-window-title">
+      <header class="case-window-bar">
+        <div class="window-dots" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <p id="case-window-title">SPROOT</p>
+        <button class="case-window-close" type="button" aria-label="Close project window">×</button>
+      </header>
+
+      <div class="case-window-content">
+        <div class="case-paper case-paper-main">
+          <small class="case-kicker">Case study folder</small>
+          <h3 id="case-title">SPROOT</h3>
+          <p id="case-summary">A soft product world built from research, structure, and calm interaction design.</p>
+        </div>
+
+        <div class="case-mockup case-mockup-large">
+          <span class="case-tape case-tape-left" aria-hidden="true"></span>
+          <img id="case-image-one" src="sproot-2.png" alt="" />
+        </div>
+
+        <div class="case-note">
+          <span>note</span>
+          <p id="case-note">Organize the messy parts until the interface feels effortless.</p>
+        </div>
+
+        <div class="case-mockup case-mockup-small">
+          <span class="case-tape case-tape-right" aria-hidden="true"></span>
+          <img id="case-image-two" src="sproot-1.png" alt="" />
+        </div>
+
+        <ul class="case-tags" id="case-tags">
+          <li>UX/UI</li>
+          <li>Research</li>
+          <li>Product</li>
+        </ul>
+
+        <a class="case-link" id="case-link" href="https://www.behance.net/gallery/244905297/Media-Monitoring-UXUI" target="_blank" rel="noopener">View full case</a>
+      </div>
+    </article>
+  </section>
+
+  <script src="main.js?v=102"></script>
+</body>
+</html>
