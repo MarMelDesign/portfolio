@@ -48,7 +48,16 @@ a:not(.project-card):hover {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-img { max-width: 100%; }
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(104,31,45,.72);
+  outline-offset: 4px;
+}
 
 body::before,
 body::after {
@@ -1252,6 +1261,14 @@ body.ticket-open .footer {
   margin: 0 auto;
   padding: clamp(4rem, 8vw, 7rem) 0;
 }
+
+.about,
+.work,
+.scrapbook-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
 .about {
   width: 100%;
   max-width: none;
@@ -3306,55 +3323,6 @@ body.ticket-open .footer {
 .figma-toolbar span:nth-child(2) { background: var(--orange); }
 .figma-toolbar span:nth-child(3) { background: var(--blue); }
 .figma-toolbar span:nth-child(4) { background: var(--green); }
-.canvas-label,
-.figma-comment,
-.color-chip,
-.connector-line {
-  position: absolute;
-  z-index: 3;
-  transform: translate3d(var(--px, 0), var(--py, 0), 0) rotate(var(--r, 0deg)) scale(var(--mag, 1));
-  transition: box-shadow .35s ease, opacity .35s ease, filter .35s ease;
-  will-change: transform;
-}
-.canvas-label {
-  padding: .55rem .75rem;
-  border: 1px dashed rgba(15,15,13,.22);
-  border-radius: 999px;
-  background: rgba(251,242,223,.86);
-  color: rgba(15,15,13,.62);
-  font: 12px var(--mono);
-  text-transform: uppercase;
-}
-.label-one { left: 36%; top: 6%; --r: -3deg; }
-.label-two { left: 77%; top: 45%; --r: 5deg; }
-.connector-line {
-  height: 1px;
-  background: repeating-linear-gradient(90deg, rgba(15,15,13,.22) 0 8px, transparent 8px 14px);
-  transform-origin: left center;
-}
-.line-one { left: 31%; top: 33%; width: 160px; --r: 13deg; }
-.line-two { left: 54%; top: 63%; width: 150px; --r: -20deg; }
-.color-chip {
-  width: 58px;
-  aspect-ratio: 1;
-  border: 1px solid rgba(15,15,13,.12);
-  border-radius: 18px;
-  box-shadow: 0 18px 36px rgba(15,15,13,.1);
-}
-.chip-one { left: 37%; top: 22%; background: rgba(214,165,167,.78); --r: 8deg; }
-.chip-two { left: 83%; top: 30%; background: rgba(139,143,95,.68); --r: -7deg; }
-.chip-three { left: 10%; top: 80%; background: rgba(184,175,162,.72); --r: 5deg; }
-.figma-comment {
-  padding: .7rem .8rem;
-  border-radius: 16px 16px 16px 4px;
-  background: rgba(255,247,189,.82);
-  border: 1px solid rgba(15,15,13,.12);
-  box-shadow: 0 18px 36px rgba(15,15,13,.1);
-  color: rgba(15,15,13,.68);
-  font: 700 1.05rem var(--hand);
-}
-.comment-one { left: 34%; top: 42%; --r: -8deg; }
-.comment-two { left: 66%; top: 11%; --r: 7deg; }
 .project-card {
   position: absolute;
   z-index: 5;
@@ -3465,12 +3433,7 @@ body.ticket-open .footer {
 .project-card.is-near {
   --mag: 1;
 }
-.figma-comment.is-near {
-  box-shadow: 0 28px 62px rgba(15,15,13,.16);
-  --mag: 1;
-}
-.project-card.is-dimmed,
-.figma-comment.is-dimmed {
+.project-card.is-dimmed {
   opacity: .78;
   filter: saturate(.9);
 }
@@ -3905,11 +3868,7 @@ body.ticket-open .footer {
   .memory-status-strip,
   .memory-fragments,
   .desktop-music-widget,
-  .desktop-sticky-note,
-  .connector-line,
-  .canvas-label,
-  .figma-comment,
-  .color-chip { display: none; }
+  .desktop-sticky-note { display: none; }
   .project-card {
     position: static;
     width: min(132px, 100%);
@@ -4036,8 +3995,7 @@ body.ticket-open .footer {
 .memory-piece,
 .film-strip,
 .hand-note,
-.scrap-doodle,
-.memory-playlist {
+.scrap-doodle {
   position: absolute;
 }
 
@@ -4438,46 +4396,6 @@ body.ticket-open .footer {
   transform: rotate(-18deg);
 }
 
-.memory-playlist {
-  left: 58%;
-  bottom: 24%;
-  z-index: 8;
-  display: grid;
-  grid-template-columns: auto repeat(3, 4px);
-  align-items: end;
-  gap: .3rem;
-  padding: .62rem .72rem;
-  border: 1px solid rgba(255,246,226,.16);
-  border-radius: 999px;
-  background: rgba(42,23,18,.72);
-  color: rgba(255,246,226,.88);
-  box-shadow: 0 24px 54px rgba(42,23,18,.18);
-  transform: rotate(5deg);
-}
-
-.memory-playlist b {
-  font: 10px var(--mono);
-  font-weight: 400;
-}
-
-.memory-playlist span {
-  width: 4px;
-  height: 12px;
-  border-radius: 999px;
-  background: rgba(255,246,226,.82);
-  animation: playlistBars 1.3s ease-in-out infinite;
-}
-
-.memory-playlist span:nth-of-type(2) { height: 18px; animation-delay: -.3s; }
-.memory-playlist span:nth-of-type(3) { height: 9px; animation-delay: -.6s; }
-
-.memory-playlist p {
-  grid-column: 1 / -1;
-  margin: .1rem 0 0;
-  color: rgba(255,246,226,.58);
-  font: 700 .95rem var(--hand);
-}
-
 .memory-piece.reveal,
 .film-strip.reveal,
 .hand-note.reveal {
@@ -4528,11 +4446,6 @@ body.ticket-open .footer {
   50% { translate: 5px -8px; }
 }
 
-@keyframes playlistBars {
-  0%, 100% { transform: scaleY(.62); opacity: .62; }
-  50% { transform: scaleY(1.18); opacity: 1; }
-}
-
 @media (max-width: 980px) {
   .scrapbook-stage {
     display: grid;
@@ -4544,8 +4457,7 @@ body.ticket-open .footer {
   .paper-layer,
   .scrapbook-dust,
   .browser-memory-tab,
-  .scrap-doodle,
-  .memory-playlist {
+  .scrap-doodle {
     display: none;
   }
 
@@ -4633,12 +4545,6 @@ body.ticket-open .footer {
 .project-card.reveal.in-view:hover {
   transform: translate3d(var(--px, 0), calc(var(--py, 0) + var(--lift, 0px)), 0) rotate(var(--r, 0)) scale(calc(var(--s, 1) * var(--mag, 1)));
 }
-.figma-comment.reveal {
-  transform: translate3d(var(--px, 0), calc(var(--py, 0) + 20px), 0) rotate(var(--r, 0deg)) scale(var(--mag, 1));
-}
-.figma-comment.reveal.in-view {
-  transform: translate3d(var(--px, 0), var(--py, 0), 0) rotate(var(--r, 0deg)) scale(var(--mag, 1));
-}
 .work .reveal,
 .work .reveal.in-view {
   opacity: 1;
@@ -4656,19 +4562,8 @@ body.ticket-open .footer {
   --mag: 1;
   transform: translate3d(var(--px, 0), calc(var(--py, 0) + var(--lift, 0px)), 0) rotate(var(--r, 0)) scale(calc(var(--s, 1) * var(--mag, 1)));
 }
-.work .figma-comment,
-.work .canvas-label,
-.work .color-chip,
-.work .connector-line,
-.work .figma-comment.reveal,
-.work .figma-comment.reveal.in-view {
-  --mag: 1;
-  transform: translate3d(0, 0, 0) rotate(var(--r, 0deg)) scale(1);
-}
 .work .project-card.is-near,
-.work .project-card.is-dimmed,
-.work .figma-comment.is-near,
-.work .figma-comment.is-dimmed {
+.work .project-card.is-dimmed {
   opacity: 1;
   filter: none;
 }
@@ -4810,6 +4705,16 @@ body.ticket-open .footer {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
   .paw-print,
   .board-canvas::before,
   .archive-glow,

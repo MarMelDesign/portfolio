@@ -5,8 +5,6 @@ const ticketExpanded = document.getElementById("ticket-expanded");
 const playlistCard = document.querySelector(".playlist-card");
 const playlistToggle = document.querySelector(".playlist-toggle");
 const softFocusAudio = document.getElementById("soft-focus-audio");
-const filterButtons = document.querySelectorAll("[data-filter]");
-const projectCards = document.querySelectorAll(".project-card");
 const draggableCards = document.querySelectorAll(".draggable");
 const caseWindowLayer = document.getElementById("case-window-layer");
 const caseWindow = document.getElementById("case-window");
@@ -85,23 +83,10 @@ if (cursor && !prefersReducedMotion && window.matchMedia("(pointer: fine)").matc
   renderCursor();
 }
 
-filterButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const filter = button.dataset.filter;
-
-    filterButtons.forEach((item) => item.classList.toggle("active", item === button));
-
-    projectCards.forEach((card) => {
-      const shouldShow = filter === "all" || card.classList.contains(filter);
-      card.classList.toggle("is-hidden", !shouldShow);
-    });
-  });
-});
-
 const initTicketExpansion = () => {
   if (!ticketCard || !ticketExpanded) return;
 
-  const closeButtons = ticketExpanded.querySelectorAll(".ticket-backdrop, .ticket-close, .ticket-panel-side a");
+  const closeButtons = ticketExpanded.querySelectorAll(".ticket-backdrop, .ticket-close");
   const closeButton = ticketExpanded.querySelector(".ticket-close");
 
   const openTicket = () => {
@@ -145,7 +130,6 @@ const initPlaylistPlayer = () => {
   if (!playlistCard || !playlistToggle || !softFocusAudio) return;
 
   let isPlaying = false;
-  let didTryAutoplay = false;
 
   const startMusic = async () => {
     try {
@@ -193,40 +177,6 @@ const initPlaylistPlayer = () => {
       await startMusic();
     }
   });
-
-  const unlockAudio = async () => {
-    await startMusic();
-
-    if (isPlaying) {
-      window.removeEventListener("pointerdown", unlockAudio);
-      window.removeEventListener("click", unlockAudio);
-      window.removeEventListener("keydown", unlockAudio);
-      window.removeEventListener("touchstart", unlockAudio);
-    }
-  };
-
-  const addAudioUnlockListeners = () => {
-    window.addEventListener("pointerdown", unlockAudio);
-    window.addEventListener("click", unlockAudio);
-    window.addEventListener("keydown", unlockAudio);
-    window.addEventListener("touchstart", unlockAudio);
-  };
-
-  const autoplayMusic = async () => {
-    if (didTryAutoplay || isPlaying) return;
-
-    didTryAutoplay = true;
-    await startMusic();
-
-    if (!isPlaying) addAudioUnlockListeners();
-  };
-
-  if (document.readyState === "complete") {
-    autoplayMusic();
-  } else {
-    window.addEventListener("load", autoplayMusic, { once: true });
-    requestAnimationFrame(autoplayMusic);
-  }
 };
 
 initPlaylistPlayer();
@@ -401,206 +351,8 @@ const initCaseWindow = () => {
 
 initCaseWindow();
 
-const initScrapbookMotion = () => {
-  const stage = document.querySelector(".scrapbook-stage");
-  if (!stage || prefersReducedMotion || !window.matchMedia("(pointer: fine)").matches) return;
-
-  const cards = document.querySelectorAll(".torn-paper-card");
-  cards.forEach((card) => {
-    const rotate = card.dataset.rotate ?? "0";
-    const scale = card.dataset.scale ?? "1";
-    card.style.setProperty("--rotate", `${rotate}deg`);
-    card.style.setProperty("--scale", scale);
-  });
-
-  stage.addEventListener("pointermove", (event) => {
-    const rect = stage.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 16;
-    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 10;
-
-    cards.forEach((card, index) => {
-      const factor = 1 + index * 0.15;
-      card.style.setProperty("--tx", `${x * factor}px`);
-      card.style.setProperty("--ty", `${y * factor}px`);
-    });
-  });
-
-  stage.addEventListener("pointerleave", () => {
-    cards.forEach((card) => {
-      card.style.setProperty("--tx", "0px");
-      card.style.setProperty("--ty", "0px");
-    });
-  });
-};
-
-initScrapbookMotion();
-
-
-const initProjectBoardMotion = () => {
-  const board = document.querySelector(".board-canvas");
-  if (!board || prefersReducedMotion || !window.matchMedia("(min-width: 901px)").matches) return;
-
-  const layers = board.querySelectorAll(
-    ".project-card, .canvas-label, .figma-comment, .color-chip, .connector-line"
-  );
-  const canUsePointer = window.matchMedia("(pointer: fine)").matches;
-  const items = Array.from(layers).map((layer, index) => ({
-    layer,
-    index,
-    depth: layer.classList.contains("project-card") ? 18 : 8 + (index % 4) * 3,
-    currentX: 0,
-    currentY: 0,
-    targetX: 0,
-    targetY: 0,
-    pointerX: 0,
-    pointerY: 0,
-    magnetX: 0,
-    magnetY: 0,
-    gatherX: 0,
-    gatherY: 0
-  }));
-  const projectItems = items.filter((item) => item.layer.classList.contains("project-card"));
-  let pointerX = 0;
-  let pointerY = 0;
-  let pointerActive = false;
-  let activeProject = null;
-  let isAnimating = false;
-
-  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-  const ease = (value) => 1 - Math.pow(1 - value, 3);
-
-  const updateTargets = () => {
-    const rect = board.getBoundingClientRect();
-    const progress = ease(clamp((window.innerHeight * 0.82 - rect.top) / (rect.height * 0.78), 0, 1));
-    const boardCenterX = board.clientWidth * 0.5;
-    const boardCenterY = board.clientHeight * 0.47;
-
-    items.forEach((item) => {
-      const layer = item.layer;
-      const baseX = layer.offsetLeft + layer.offsetWidth / 2;
-      const baseY = layer.offsetTop + layer.offsetHeight / 2;
-      const ring = item.layer.classList.contains("project-card") ? 118 : 170;
-      const angle = item.index * 1.73;
-      const clusterX = boardCenterX + Math.cos(angle) * ring;
-      const clusterY = boardCenterY + Math.sin(angle) * ring * 0.58;
-
-      item.gatherX = (clusterX - baseX) * progress;
-      item.gatherY = (clusterY - baseY) * progress;
-
-      if (pointerActive && canUsePointer) {
-        item.pointerX = pointerX * item.depth * (0.65 + progress * 0.35);
-        item.pointerY = pointerY * item.depth * (0.65 + progress * 0.35);
-      } else {
-        item.pointerX = 0;
-        item.pointerY = 0;
-      }
-
-      item.targetX = item.gatherX + item.pointerX + item.magnetX;
-      item.targetY = item.gatherY + item.pointerY + item.magnetY;
-    });
-  };
-
-  const render = () => {
-    updateTargets();
-    let stillMoving = false;
-
-    items.forEach((item) => {
-      item.currentX += (item.targetX - item.currentX) * 0.09;
-      item.currentY += (item.targetY - item.currentY) * 0.09;
-
-      if (Math.abs(item.targetX - item.currentX) > 0.1 || Math.abs(item.targetY - item.currentY) > 0.1) {
-        stillMoving = true;
-      }
-
-      item.layer.style.setProperty("--px", `${item.currentX.toFixed(2)}px`);
-      item.layer.style.setProperty("--py", `${item.currentY.toFixed(2)}px`);
-    });
-
-    if (stillMoving) {
-      requestAnimationFrame(render);
-    } else {
-      isAnimating = false;
-    }
-  };
-
-  const wake = () => {
-    if (isAnimating) return;
-    isAnimating = true;
-    requestAnimationFrame(render);
-  };
-
-  if (canUsePointer) {
-    board.addEventListener("pointermove", (event) => {
-      const rect = board.getBoundingClientRect();
-      pointerX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-      pointerY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-      pointerActive = true;
-      wake();
-    });
-
-    board.addEventListener("pointerleave", () => {
-      pointerActive = false;
-      activeProject = null;
-      items.forEach((item) => {
-        item.magnetX = 0;
-        item.magnetY = 0;
-        item.layer.classList.remove("is-near", "is-dimmed");
-      });
-      wake();
-    });
-  }
-
-  projectItems.forEach((projectItem) => {
-    projectItem.layer.addEventListener("pointerenter", () => {
-      if (!canUsePointer) return;
-
-      activeProject = projectItem;
-      const activeCenterX = projectItem.layer.offsetLeft + projectItem.layer.offsetWidth / 2;
-      const activeCenterY = projectItem.layer.offsetTop + projectItem.layer.offsetHeight / 2;
-
-      items.forEach((item) => {
-        if (item === activeProject) {
-          item.layer.classList.remove("is-dimmed", "is-near");
-          item.magnetX = 0;
-          item.magnetY = -4;
-          return;
-        }
-
-        const centerX = item.layer.offsetLeft + item.layer.offsetWidth / 2;
-        const centerY = item.layer.offsetTop + item.layer.offsetHeight / 2;
-        const distance = Math.hypot(centerX - activeCenterX, centerY - activeCenterY);
-        const pull = clamp(1 - distance / 560, 0, 1);
-        const angle = Math.atan2(activeCenterY - centerY, activeCenterX - centerX);
-
-        item.magnetX = Math.cos(angle) * pull * 18;
-        item.magnetY = Math.sin(angle) * pull * 18;
-        item.layer.classList.toggle("is-near", pull > 0.25);
-        item.layer.classList.toggle("is-dimmed", pull <= 0.08);
-      });
-
-      wake();
-    });
-
-    projectItem.layer.addEventListener("pointerleave", () => {
-      if (!canUsePointer || activeProject !== projectItem) return;
-
-      activeProject = null;
-      items.forEach((item) => {
-        item.magnetX = 0;
-        item.magnetY = 0;
-        item.layer.classList.remove("is-near", "is-dimmed");
-      });
-      wake();
-    });
-  });
-
-  window.addEventListener("scroll", wake, { passive: true });
-  window.addEventListener("resize", wake);
-  wake();
-};
-
 const revealTargets = document.querySelectorAll(
-  ".float-card, .ticket-card, .about, .project-card, .figma-comment, .section-heading, .torn-paper-card"
+  ".float-card, .ticket-card, .about, .project-card, .section-heading, .memory-piece, .film-strip, .hand-note"
 );
 
 if ("IntersectionObserver" in window && !prefersReducedMotion) {
