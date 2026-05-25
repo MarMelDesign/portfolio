@@ -1,5 +1,8 @@
 const footerYear = document.getElementById("footer-year");
 const cursor = document.getElementById("cursor");
+const portfolioLoader = document.getElementById("portfolio-loader");
+const loaderProgress = document.getElementById("loader-progress");
+const loaderPhrase = document.getElementById("loader-phrase");
 const ticketCard = document.querySelector(".ticket-card");
 const ticketExpanded = document.getElementById("ticket-expanded");
 const playlistCard = document.querySelector(".playlist-card");
@@ -19,6 +22,8 @@ const caseLink = document.getElementById("case-link");
 const caseWindowClose = document.querySelector(".case-window-close");
 const caseWindowBar = document.querySelector(".case-window-bar");
 const memoryDesktop = document.querySelector(".board-canvas");
+const mobileMagicPopup = document.getElementById("mobile-magic-popup");
+const mobileMagicClose = document.querySelector(".mobile-magic-close");
 
 const memorySlugs = {
   SPROOT: "sproot",
@@ -59,6 +64,96 @@ if (footerYear) {
 }
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const initPortfolioLoader = () => {
+  if (!portfolioLoader || !loaderProgress) {
+    document.body.classList.remove("is-loading");
+    return;
+  }
+
+  let progress = 0;
+  let loaded = document.readyState === "complete";
+  let phraseIndex = -1;
+  const startedAt = performance.now();
+  const minDuration = prefersReducedMotion ? 500 : 3900;
+  const settleDelay = prefersReducedMotion ? 120 : 940;
+  const phrases = [
+    "preparing something beautiful...",
+    "warming up the creative room...",
+    "collecting unfinished thoughts...",
+    "brewing visual identity...",
+    "the cat is supervising the design process..."
+  ];
+
+  const setProgress = (value) => {
+    progress = Math.min(100, Math.max(progress, value));
+    const rounded = Math.round(progress);
+    const nextPhraseIndex = Math.min(phrases.length - 1, Math.floor(progress / 20));
+
+    if (loaderPhrase && nextPhraseIndex !== phraseIndex) {
+      phraseIndex = nextPhraseIndex;
+      loaderPhrase.classList.remove("is-changing");
+      void loaderPhrase.offsetWidth;
+      loaderPhrase.textContent = phrases[phraseIndex];
+      loaderPhrase.classList.add("is-changing");
+    }
+
+    portfolioLoader.style.setProperty("--load-progress", (progress / 100).toFixed(3));
+    portfolioLoader.style.setProperty("--ripple-duration", `${(2.8 - (progress / 100) * 1.1).toFixed(2)}s`);
+    portfolioLoader.style.setProperty("--steam-strength", (0.42 + (progress / 100) * 0.58).toFixed(3));
+    portfolioLoader.style.setProperty("--loader-breath", (0.72 + Math.sin(performance.now() / 260) * 0.08).toFixed(3));
+    loaderProgress.textContent = rounded;
+  };
+
+  const finish = () => {
+    setProgress(100);
+    window.setTimeout(() => {
+      portfolioLoader.classList.add("is-complete");
+      document.body.classList.add("loader-exiting");
+      portfolioLoader.setAttribute("aria-hidden", "true");
+      window.setTimeout(() => {
+        document.body.classList.remove("is-loading", "loader-exiting");
+        portfolioLoader.remove();
+      }, prefersReducedMotion ? 180 : 1300);
+    }, settleDelay);
+  };
+
+  const tick = () => {
+    const elapsed = performance.now() - startedAt;
+    const ease = 1 - Math.pow(1 - Math.min(elapsed / minDuration, 1), 2.4);
+    const durationProgress = Math.min(88, ease * 88);
+    const livingProgress = durationProgress + Math.sin(elapsed / 260) * 1.3 + Math.sin(elapsed / 690) * 1.8;
+
+    if (loaded && elapsed >= minDuration) {
+      finish();
+      return;
+    }
+
+    const loadedProgress = Math.max(livingProgress, Math.min(97, 52 + ease * 45));
+    setProgress(loaded ? loadedProgress : livingProgress);
+    window.requestAnimationFrame(tick);
+  };
+
+  if (!loaded) {
+    window.addEventListener("load", () => {
+      loaded = true;
+    }, { once: true });
+  }
+
+  if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
+    window.addEventListener("pointermove", (event) => {
+      const x = (event.clientX / window.innerWidth - .5).toFixed(3);
+      const y = (event.clientY / window.innerHeight - .5).toFixed(3);
+      portfolioLoader.style.setProperty("--loader-x", x);
+      portfolioLoader.style.setProperty("--loader-y", y);
+    });
+  }
+
+  setProgress(0);
+  tick();
+};
+
+initPortfolioLoader();
 
 if (cursor && !prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
   let cursorX = window.innerWidth / 2;
@@ -134,7 +229,9 @@ const initPlaylistPlayer = () => {
   const startMusic = async () => {
     try {
       softFocusAudio.volume = 0.42;
-      softFocusAudio.load();
+      if (softFocusAudio.readyState === 0) {
+        softFocusAudio.load();
+      }
       await softFocusAudio.play();
       playlistCard.classList.add("is-playing");
       playlistCard.classList.remove("is-audio-blocked");
@@ -158,15 +255,6 @@ const initPlaylistPlayer = () => {
     isPlaying = false;
   };
 
-  const keepButtonInteractive = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-  };
-
-  playlistToggle.addEventListener("pointerdown", keepButtonInteractive, true);
-  playlistToggle.addEventListener("mousedown", keepButtonInteractive, true);
-  playlistToggle.addEventListener("touchstart", keepButtonInteractive, true);
-
   playlistToggle.addEventListener("click", async (event) => {
     event.preventDefault();
     event.stopPropagation();
@@ -177,9 +265,44 @@ const initPlaylistPlayer = () => {
       await startMusic();
     }
   });
+
+  ["pointerdown", "mousedown", "touchstart"].forEach((eventName) => {
+    playlistToggle.addEventListener(eventName, (event) => {
+      event.stopPropagation();
+    }, { passive: true });
+  });
 };
 
 initPlaylistPlayer();
+
+const initMobileMagicPopup = () => {
+  if (!mobileMagicPopup || !mobileMagicClose) return;
+
+  const mobileQuery = window.matchMedia("(max-width: 760px)");
+  const dismissedKey = "marmel-mobile-magic-dismissed";
+
+  const closePopup = () => {
+    mobileMagicPopup.classList.remove("is-visible");
+    mobileMagicPopup.setAttribute("aria-hidden", "true");
+    sessionStorage.setItem(dismissedKey, "true");
+  };
+
+  const maybeShowPopup = () => {
+    if (!mobileQuery.matches || sessionStorage.getItem(dismissedKey) === "true") return;
+
+    window.setTimeout(() => {
+      if (!mobileQuery.matches || sessionStorage.getItem(dismissedKey) === "true") return;
+      mobileMagicPopup.classList.add("is-visible");
+      mobileMagicPopup.setAttribute("aria-hidden", "false");
+    }, 900);
+  };
+
+  mobileMagicClose.addEventListener("click", closePopup);
+  mobileQuery.addEventListener?.("change", maybeShowPopup);
+  maybeShowPopup();
+};
+
+initMobileMagicPopup();
 
 const caseStudies = {
   SPROOT: {
@@ -221,6 +344,28 @@ const initCaseWindow = () => {
   let dragOffsetY = 0;
   let windowX = 0;
   let windowY = 0;
+  let caseScrollY = 0;
+  let focusReleaseTimer = 0;
+
+  const lockCaseFocus = () => {
+    caseScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.documentElement.classList.add("case-scroll-lock", "case-focus-open");
+    document.body.classList.add("case-scroll-lock");
+    document.body.classList.add("case-focus-open");
+    document.body.style.top = `-${caseScrollY}px`;
+    document.body.style.width = "100%";
+  };
+
+  const unlockCaseFocus = () => {
+    const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = "auto";
+    document.documentElement.classList.remove("case-scroll-lock");
+    document.body.classList.remove("case-scroll-lock");
+    document.body.style.top = "";
+    document.body.style.width = "";
+    window.scrollTo(0, caseScrollY);
+    document.documentElement.style.scrollBehavior = previousScrollBehavior;
+  };
 
   const setWindowPosition = (x, y) => {
     const margin = 16;
@@ -256,20 +401,32 @@ const initCaseWindow = () => {
   };
 
   const openCaseWindow = (folder) => {
+    window.clearTimeout(focusReleaseTimer);
     lastTrigger = folder;
     renderCaseStudy(folder);
-    caseWindowLayer.classList.add("is-open");
+    lockCaseFocus();
+    caseWindowLayer.classList.remove("is-closing");
     caseWindowLayer.setAttribute("aria-hidden", "false");
+    caseWindow.setAttribute("aria-modal", "true");
+    centerWindow();
     requestAnimationFrame(() => {
-      centerWindow();
+      caseWindowLayer.classList.add("is-open");
       caseWindowClose?.focus();
     });
   };
 
   const closeCaseWindow = () => {
+    caseWindowLayer.classList.add("is-closing");
     caseWindowLayer.classList.remove("is-open");
     caseWindowLayer.setAttribute("aria-hidden", "true");
-    lastTrigger?.focus();
+    caseWindow.setAttribute("aria-modal", "false");
+    document.documentElement.classList.remove("case-focus-open");
+    document.body.classList.remove("case-focus-open");
+    focusReleaseTimer = window.setTimeout(() => {
+      caseWindowLayer.classList.remove("is-closing");
+      unlockCaseFocus();
+      lastTrigger?.focus({ preventScroll: true });
+    }, prefersReducedMotion ? 0 : 820);
   };
 
   document.querySelectorAll(".desktop-folder").forEach((folder) => {
@@ -308,6 +465,10 @@ const initCaseWindow = () => {
   });
 
   caseWindowClose?.addEventListener("click", closeCaseWindow);
+
+  caseWindowLayer.addEventListener("click", (event) => {
+    if (event.target === caseWindowLayer) closeCaseWindow();
+  });
 
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && caseWindowLayer.classList.contains("is-open")) {
@@ -352,7 +513,7 @@ const initCaseWindow = () => {
 initCaseWindow();
 
 const revealTargets = document.querySelectorAll(
-  ".float-card, .ticket-card, .about, .project-card, .section-heading, .memory-piece, .film-strip, .hand-note"
+  ".float-card, .ticket-card, .about, .project-card, .section-heading, .memory-piece, .film-strip, .hand-note, .archive-vinyl, .archive-browser-window, .archive-map-card, .archive-type-card, .archive-coffee-card, .archive-dance-card"
 );
 
 if ("IntersectionObserver" in window && !prefersReducedMotion) {
@@ -386,6 +547,8 @@ if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
     let cardY = 0;
 
     card.addEventListener("pointerdown", (event) => {
+      if (event.target.closest("button, a, input, textarea, select, audio")) return;
+
       isDragging = true;
       startX = event.clientX - cardX;
       startY = event.clientY - cardY;

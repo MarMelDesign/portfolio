@@ -5,15 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="MarMel portfolio by Mara Melkonyan, featuring UX/UI, graphic design, playful visual systems, and selected creative work." />
   <title>MarMel — Creative Room</title>
+  <link rel="icon" type="image/png" href="HeroIllus/flaticon.png" />
+  <link rel="apple-touch-icon" href="HeroIllus/flaticon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://picsum.photos" />
   <link rel="preload" as="image" href="MarMel.png" />
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=Bagel+Fat+One&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Gaegu:wght@400;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=141" />
+  <link rel="stylesheet" href="styles.css?v=152" />
 </head>
-<body>
+<body class="is-loading">
   <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <section class="portfolio-loader" id="portfolio-loader" aria-live="polite" aria-label="Entering Mara's creative room">
+    <span class="loader-transition-ripple" aria-hidden="true"></span>
+    <div class="loader-film-grain" aria-hidden="true"></div>
+    <div class="loader-dust" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="loader-scene cat-loader-scene" aria-hidden="true">
+      <span class="cat-loader-glow"></span>
+      <div class="cat-loader-stage">
+        <img class="loader-cat-gif" src="Works/caty.gif" width="400" height="226" alt="" decoding="async" />
+
+        <div class="cat-loading-bar">
+          <span class="cat-loading-fill"></span>
+          <span class="cat-loading-shine"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="loader-copy">
+      <p id="loader-phrase">preparing something beautiful...</p>
+      <span><b id="loader-progress">0</b>%</span>
+    </div>
+  </section>
 
   <nav class="nav">
     <a class="nav-logo" href="#top">MarMel</a>
@@ -24,6 +52,14 @@
       <a href="resume.html">Resume</a>
     </div>
   </nav>
+
+  <section class="mobile-magic-popup" id="mobile-magic-popup" aria-hidden="true" aria-labelledby="mobile-magic-title">
+    <div class="mobile-magic-card" role="dialog" aria-modal="false">
+      <p id="mobile-magic-title">For the full magic, using a laptop is recommended.</p>
+      <span>Mobile keeps the main story simple and calm.</span>
+      <button class="mobile-magic-close" type="button" aria-label="Close laptop recommendation">OK</button>
+    </div>
+  </section>
 
   <main id="top">
     <section class="hero">
@@ -101,20 +137,20 @@
           <div class="sound-bars" aria-hidden="true">
             <span></span><span></span><span></span><span></span>
           </div>
-          <audio id="soft-focus-audio" preload="none" loop>
+          <audio id="soft-focus-audio" preload="metadata" loop playsinline>
             <source src="music.mp3" type="audio/mpeg" />
           </audio>
         </article>
       </div>
-    </section>
 
-    <div class="ticket-expanded" id="ticket-expanded" aria-hidden="true">
-      <button class="ticket-backdrop" type="button" aria-label="Close expanded ticket"></button>
-      <article class="ticket-panel" role="dialog" aria-modal="true" aria-label="Creative boarding pass ticket">
-        <button class="ticket-close" type="button" aria-label="Close ticket">×</button>
-        <img class="ticket-panel-image" src="ticket.png" width="1723" height="913" alt="Creative boarding pass ticket" loading="lazy" decoding="async" />
-      </article>
-    </div>
+      <div class="ticket-expanded" id="ticket-expanded" aria-hidden="true">
+        <button class="ticket-backdrop" type="button" aria-label="Close expanded ticket"></button>
+        <article class="ticket-panel" role="dialog" aria-modal="true" aria-label="Creative boarding pass ticket">
+          <button class="ticket-close" type="button" aria-label="Close ticket">×</button>
+          <img class="ticket-panel-image" src="ticket.png" width="1723" height="913" alt="Creative boarding pass ticket" loading="lazy" decoding="async" />
+        </article>
+      </div>
+    </section>
 
     <section class="about about-canvas" id="about">
       <span class="about-glow" aria-hidden="true"></span>
@@ -257,16 +293,16 @@
       </div>
     </section>
 
-    <section class="scrapbook-section" id="playground">
+    <section class="scrapbook-section inspiration-archive" id="playground">
       <img class="capture-edge-decoration" src="Playground/capture.png" width="972" height="1672" alt="" aria-hidden="true" loading="lazy" decoding="async" />
 
       <div class="section-heading scrapbook-heading">
-        <p>Photo wall</p>
-        <h2>Capturing moments</h2>
-        <p class="section-subtitle">A cinematic scrapbook of saved fragments, half-remembered places, and soft little feelings.</p>
+        <p>private archive</p>
+        <h2>What Inspires My Work Without Me Noticing</h2>
+        <p class="section-subtitle">A quiet archive of languages, films, scent memories, rhythm, paper, coffee, and internet fragments that slowly shape how I design.</p>
       </div>
 
-      <div class="scrapbook-stage" aria-label="Scrapbook style photo gallery">
+      <div class="scrapbook-stage inspiration-stage" aria-label="Private inspiration archive">
         <span class="scrapbook-dust dust-one" aria-hidden="true"></span>
         <span class="scrapbook-dust dust-two" aria-hidden="true"></span>
         <span class="scrapbook-dust dust-three" aria-hidden="true"></span>
@@ -276,75 +312,118 @@
 
         <div class="browser-memory-tab tab-one" aria-hidden="true">
           <span></span><span></span><span></span>
-          <b>memories/index.html</b>
+          <b>subconscious/archive.html</b>
         </div>
         <div class="browser-memory-tab tab-two" aria-hidden="true">
           <span></span><span></span><span></span>
-          <b>late-night-notes.txt</b>
+          <b>things-i-keep-noticing.txt</b>
         </div>
 
-        <article class="memory-piece polaroid memory-one reveal" tabindex="0">
+        <article class="memory-piece polaroid archive-kdrama reveal" tabindex="0">
           <span class="photo-tape tape-left" aria-hidden="true"></span>
-          <img src="https://picsum.photos/id/1060/640/820" width="640" height="820" alt="Stock placeholder photo of a cozy cafe table" loading="lazy" decoding="async" />
+          <div class="archive-placeholder">insert kdrama still</div>
           <div class="memory-caption">
-            <small>cafe / 11:42 pm</small>
-            <p>this cafe smelled like cinnamon</p>
+            <small>cinematic atmosphere</small>
+            <p>Korean drama lighting</p>
           </div>
-          <span class="memory-hover-note">designed half the project here</span>
+          <span class="memory-hover-note">saved for the lighting alone</span>
         </article>
 
-        <article class="memory-piece taped-photo memory-two reveal" tabindex="0">
+        <article class="memory-piece taped-photo archive-perfume reveal" tabindex="0">
           <span class="photo-tape tape-top" aria-hidden="true"></span>
-          <img src="https://picsum.photos/id/1043/760/540" width="760" height="540" alt="Stock placeholder photo of a warm city evening" loading="lazy" decoding="async" />
-          <span class="memory-hover-note">saved from a blurry night</span>
+          <div class="archive-placeholder">insert perfume image</div>
+          <span class="archive-label">scent memory / visual texture</span>
+          <span class="memory-hover-note">this scent feels like an entire movie</span>
         </article>
 
-        <article class="memory-piece polaroid small-polaroid memory-three reveal" tabindex="0">
-          <img src="https://picsum.photos/id/1027/560/720" width="560" height="720" alt="Stock placeholder portrait photo" loading="lazy" decoding="async" />
+        <article class="memory-piece polaroid small-polaroid archive-language reveal" tabindex="0">
+          <div class="archive-placeholder">insert language notes</div>
           <div class="memory-caption">
-            <small>soft proof</small>
-            <p>almost deleted this one</p>
+            <small>language notes</small>
+            <p>alphabets change rhythm</p>
           </div>
+          <span class="memory-hover-note">learning languages changed the way I see interfaces</span>
         </article>
 
-        <article class="memory-piece taped-photo memory-four reveal" tabindex="0">
+        <article class="memory-piece taped-photo archive-film reveal" tabindex="0">
           <span class="photo-tape tape-corner" aria-hidden="true"></span>
-          <img src="https://picsum.photos/id/1011/760/620" width="760" height="620" alt="Stock placeholder photo of a road through mountains" loading="lazy" decoding="async" />
-          <span class="memory-hover-note">tiny moments that stayed</span>
+          <div class="archive-placeholder">insert old movie frame</div>
+          <span class="archive-label">old American film / warm grain</span>
+          <span class="memory-hover-note">collected somewhere between work and life</span>
         </article>
 
-        <div class="film-strip memory-film reveal" tabindex="0">
-          <span><img src="https://picsum.photos/id/1035/240/180" width="240" height="180" alt="Stock placeholder landscape film frame" loading="lazy" decoding="async" /></span>
-          <span><img src="https://picsum.photos/id/1067/240/180" width="240" height="180" alt="Stock placeholder evening film frame" loading="lazy" decoding="async" /></span>
-          <span><img src="https://picsum.photos/id/1080/240/180" width="240" height="180" alt="Stock placeholder travel film frame" loading="lazy" decoding="async" /></span>
-          <em>playlist: songs for walking home</em>
+        <div class="film-strip archive-filmstrip reveal" tabindex="0">
+          <span><i>insert old movie frame</i></span>
+          <span><i>insert kdrama still</i></span>
+          <span><i>insert café photo</i></span>
+          <em>frames that teach atmosphere before composition</em>
         </div>
 
-        <div class="hand-note note-one reveal" tabindex="0">
-          <span>03:18</span>
-          <p>kept this because the light felt honest.</p>
+        <article class="archive-vinyl reveal" tabindex="0">
+          <span class="vinyl-disc" aria-hidden="true"></span>
+          <div class="vinyl-cover">insert vinyl cover</div>
+          <p>vinyl static &gt; silence</p>
+          <span class="memory-hover-note">analog sound taught me pacing</span>
+        </article>
+
+        <div class="hand-note note-one archive-note reveal" tabindex="0">
+          <span>motion / rhythm</span>
+          <p>dance taught me rhythm before motion design did</p>
         </div>
-        <div class="hand-note note-two reveal" tabindex="0">
-          <span>saved feeling</span>
-          <p>the kind of quiet that makes everything softer.</p>
+        <div class="hand-note note-two archive-note reveal" tabindex="0">
+          <span>typography</span>
+          <p>I notice typography before faces sometimes</p>
         </div>
-        <div class="hand-note note-three reveal" tabindex="0">
-          <span>place</span>
-          <p>somewhere between a deadline and a daydream.</p>
+        <div class="hand-note note-three archive-note reveal" tabindex="0">
+          <span>country histories</span>
+          <p>culture makes every interface feel less neutral</p>
         </div>
+
+        <article class="archive-browser-window reveal" tabindex="0">
+          <div><span></span><span></span><span></span><b>old-internet-feelings.net</b></div>
+          <p>insert emotional internet nostalgia</p>
+          <small>late-night tabs, saved screenshots, tiny UI ghosts</small>
+          <span class="memory-hover-note">the internet felt softer when everything was less perfect</span>
+        </article>
+
+        <article class="archive-map-card reveal" tabindex="0">
+          <b>insert map / culture notes</b>
+          <p>histories, food rituals, alphabets, cities, ceremonies</p>
+          <span class="memory-hover-note">fascination with cultures keeps my work from feeling flat</span>
+        </article>
+
+        <article class="archive-type-card reveal" tabindex="0">
+          <span>Aa</span>
+          <p>insert typography inspiration</p>
+          <small>serif mood / editorial tension / imperfect spacing</small>
+          <span class="memory-hover-note">type is emotion pretending to be structure</span>
+        </article>
+
+        <article class="archive-coffee-card reveal" tabindex="0">
+          <span aria-hidden="true"></span>
+          <b>warm cafés & coffee rituals</b>
+          <p>insert café corner, table light, cup, receipt, notebook</p>
+          <span class="memory-hover-note">coffee rituals make work feel like a scene</span>
+        </article>
+
+        <article class="archive-dance-card reveal" tabindex="0">
+          <b>K-pop dance / movement</b>
+          <p>insert choreography still</p>
+          <span class="memory-hover-note">rhythm makes interfaces feel alive</span>
+        </article>
 
         <span class="scrap-doodle doodle-memory-heart" aria-hidden="true">♡</span>
         <span class="scrap-doodle doodle-memory-star" aria-hidden="true">✶</span>
         <span class="scrap-doodle doodle-memory-arrow" aria-hidden="true">↗</span>
         <span class="scrap-doodle doodle-memory-loop" aria-hidden="true"></span>
-        <article class="memory-piece polaroid wide-polaroid memory-five reveal" tabindex="0">
+        <article class="memory-piece polaroid wide-polaroid archive-editorial reveal" tabindex="0">
           <span class="photo-tape tape-right" aria-hidden="true"></span>
-          <img src="https://picsum.photos/id/1056/760/540" width="760" height="540" alt="Stock placeholder photo of a misty landscape" loading="lazy" decoding="async" />
+          <div class="archive-placeholder">insert tactile paper and editorial layout</div>
           <div class="memory-caption">
-            <small>somewhere warm</small>
-            <p>tiny moments that stayed</p>
+            <small>paper / layout / touch</small>
+            <p>tactile thinking</p>
           </div>
-          <span class="memory-hover-note">kept for the feeling, not the focus</span>
+          <span class="memory-hover-note">paper grain makes digital things feel human</span>
         </article>
       </div>
     </section>
@@ -399,6 +478,6 @@
     </article>
   </section>
 
-  <script src="main.js?v=103" defer></script>
+  <script src="main.js?v=113" defer></script>
 </body>
 </html>
