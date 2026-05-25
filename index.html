@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="MarMel portfolio by Mara Melkonyan, featuring UX/UI, graphic design, playful visual systems, and selected creative work." />
-  <title>MarMel — Creative Room</title>
+  <title>MarMel — Senior Product Designer . Portfolio</title>
   <link rel="icon" type="image/png" href="HeroIllus/flaticon.png" />
   <link rel="apple-touch-icon" href="HeroIllus/flaticon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://picsum.photos" />
   <link rel="preload" as="image" href="MarMel.png" />
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=Bagel+Fat+One&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Gaegu:wght@400;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=152" />
+  <link rel="stylesheet" href="styles.css?v=157" />
 </head>
 <body class="is-loading">
   <div class="cursor" id="cursor" aria-hidden="true"></div>
@@ -48,7 +48,7 @@
     <div class="nav-links" aria-label="Primary navigation">
       <a href="#about">About</a>
       <a href="#work">Work</a>
-      <a href="#playground">Playground</a>
+      <a href="#internet">Find Me</a>
       <a href="resume.html">Resume</a>
     </div>
   </nav>
@@ -218,7 +218,10 @@
 
       <img class="about-cat-gif" src="About/cat.gif" width="2048" height="2048" alt="" aria-hidden="true" loading="lazy" decoding="async" />
 
-      <img class="about-book" src="About/book.png" width="1536" height="1081" alt="Open scrapbook notebook" loading="lazy" decoding="async" />
+      <div class="notebook-explorer" aria-label="Explore Mara's creative notebook">
+        <img class="about-book" src="About/book.png" width="1536" height="1081" alt="Open scrapbook notebook" loading="lazy" decoding="async" />
+        <span class="notebook-magnifier" aria-hidden="true"></span>
+      </div>
     </section>
 
     <section class="work" id="work">
@@ -293,138 +296,50 @@
       </div>
     </section>
 
-    <section class="scrapbook-section inspiration-archive" id="playground">
-      <img class="capture-edge-decoration" src="Playground/capture.png" width="972" height="1672" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-
-      <div class="section-heading scrapbook-heading">
-        <p>private archive</p>
-        <h2>What Inspires My Work Without Me Noticing</h2>
-        <p class="section-subtitle">A quiet archive of languages, films, scent memories, rhythm, paper, coffee, and internet fragments that slowly shape how I design.</p>
+    <section class="internet-section" id="internet">
+      <div class="section-heading internet-heading">
+        <h2>Find Me Around The Internet</h2>
       </div>
 
-      <div class="scrapbook-stage inspiration-stage" aria-label="Private inspiration archive">
-        <span class="scrapbook-dust dust-one" aria-hidden="true"></span>
-        <span class="scrapbook-dust dust-two" aria-hidden="true"></span>
-        <span class="scrapbook-dust dust-three" aria-hidden="true"></span>
-        <span class="paper-layer layer-one" aria-hidden="true"></span>
-        <span class="paper-layer layer-two" aria-hidden="true"></span>
-        <span class="paper-layer layer-three" aria-hidden="true"></span>
+      <div class="internet-desk" aria-label="Digital portals around the internet">
+        <span class="internet-glow" aria-hidden="true"></span>
+        <span class="internet-dust internet-dust-one" aria-hidden="true"></span>
+        <span class="internet-dust internet-dust-two" aria-hidden="true"></span>
 
-        <div class="browser-memory-tab tab-one" aria-hidden="true">
-          <span></span><span></span><span></span>
-          <b>subconscious/archive.html</b>
-        </div>
-        <div class="browser-memory-tab tab-two" aria-hidden="true">
-          <span></span><span></span><span></span>
-          <b>things-i-keep-noticing.txt</b>
-        </div>
+        <a class="internet-artifact portal-instagram reveal" href="https://www.instagram.com/mlknmara___/" target="_blank" rel="noopener" aria-label="Open Instagram profile">
+          <span class="portal-kicker">instagram</span>
+          <span class="insta-photo-stack" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </span>
+          <strong>small frames, soft color, almost-missed details</strong>
+          <em>camera roll / warm fragments</em>
+        </a>
 
-        <article class="memory-piece polaroid archive-kdrama reveal" tabindex="0">
-          <span class="photo-tape tape-left" aria-hidden="true"></span>
-          <div class="archive-placeholder">insert kdrama still</div>
-          <div class="memory-caption">
-            <small>cinematic atmosphere</small>
-            <p>Korean drama lighting</p>
-          </div>
-          <span class="memory-hover-note">saved for the lighting alone</span>
-        </article>
+        <a class="internet-artifact portal-behance reveal" href="https://www.behance.net/melkonyan_designer" target="_blank" rel="noopener" aria-label="Open Behance profile">
+          <span class="portal-kicker">behance</span>
+          <span class="behance-canvas" aria-hidden="true">
+            <i></i><i></i><i></i>
+          </span>
+          <strong>project rooms, interface layers, visual systems</strong>
+          <em>selected case studies</em>
+        </a>
 
-        <article class="memory-piece taped-photo archive-perfume reveal" tabindex="0">
-          <span class="photo-tape tape-top" aria-hidden="true"></span>
-          <div class="archive-placeholder">insert perfume image</div>
-          <span class="archive-label">scent memory / visual texture</span>
-          <span class="memory-hover-note">this scent feels like an entire movie</span>
-        </article>
+        <a class="internet-artifact portal-linkedin reveal" href="https://www.linkedin.com/in/mara-melkonian/" target="_blank" rel="noopener" aria-label="Open LinkedIn profile">
+          <span class="portal-kicker">linkedin</span>
+          <span class="linkedin-folder" aria-hidden="true"></span>
+          <strong>currently designing emotional interfaces</strong>
+          <em>resume archive / product notes</em>
+        </a>
 
-        <article class="memory-piece polaroid small-polaroid archive-language reveal" tabindex="0">
-          <div class="archive-placeholder">insert language notes</div>
-          <div class="memory-caption">
-            <small>language notes</small>
-            <p>alphabets change rhythm</p>
-          </div>
-          <span class="memory-hover-note">learning languages changed the way I see interfaces</span>
-        </article>
-
-        <article class="memory-piece taped-photo archive-film reveal" tabindex="0">
-          <span class="photo-tape tape-corner" aria-hidden="true"></span>
-          <div class="archive-placeholder">insert old movie frame</div>
-          <span class="archive-label">old American film / warm grain</span>
-          <span class="memory-hover-note">collected somewhere between work and life</span>
-        </article>
-
-        <div class="film-strip archive-filmstrip reveal" tabindex="0">
-          <span><i>insert old movie frame</i></span>
-          <span><i>insert kdrama still</i></span>
-          <span><i>insert café photo</i></span>
-          <em>frames that teach atmosphere before composition</em>
-        </div>
-
-        <article class="archive-vinyl reveal" tabindex="0">
-          <span class="vinyl-disc" aria-hidden="true"></span>
-          <div class="vinyl-cover">insert vinyl cover</div>
-          <p>vinyl static &gt; silence</p>
-          <span class="memory-hover-note">analog sound taught me pacing</span>
-        </article>
-
-        <div class="hand-note note-one archive-note reveal" tabindex="0">
-          <span>motion / rhythm</span>
-          <p>dance taught me rhythm before motion design did</p>
-        </div>
-        <div class="hand-note note-two archive-note reveal" tabindex="0">
-          <span>typography</span>
-          <p>I notice typography before faces sometimes</p>
-        </div>
-        <div class="hand-note note-three archive-note reveal" tabindex="0">
-          <span>country histories</span>
-          <p>culture makes every interface feel less neutral</p>
-        </div>
-
-        <article class="archive-browser-window reveal" tabindex="0">
-          <div><span></span><span></span><span></span><b>old-internet-feelings.net</b></div>
-          <p>insert emotional internet nostalgia</p>
-          <small>late-night tabs, saved screenshots, tiny UI ghosts</small>
-          <span class="memory-hover-note">the internet felt softer when everything was less perfect</span>
-        </article>
-
-        <article class="archive-map-card reveal" tabindex="0">
-          <b>insert map / culture notes</b>
-          <p>histories, food rituals, alphabets, cities, ceremonies</p>
-          <span class="memory-hover-note">fascination with cultures keeps my work from feeling flat</span>
-        </article>
-
-        <article class="archive-type-card reveal" tabindex="0">
-          <span>Aa</span>
-          <p>insert typography inspiration</p>
-          <small>serif mood / editorial tension / imperfect spacing</small>
-          <span class="memory-hover-note">type is emotion pretending to be structure</span>
-        </article>
-
-        <article class="archive-coffee-card reveal" tabindex="0">
-          <span aria-hidden="true"></span>
-          <b>warm cafés & coffee rituals</b>
-          <p>insert café corner, table light, cup, receipt, notebook</p>
-          <span class="memory-hover-note">coffee rituals make work feel like a scene</span>
-        </article>
-
-        <article class="archive-dance-card reveal" tabindex="0">
-          <b>K-pop dance / movement</b>
-          <p>insert choreography still</p>
-          <span class="memory-hover-note">rhythm makes interfaces feel alive</span>
-        </article>
-
-        <span class="scrap-doodle doodle-memory-heart" aria-hidden="true">♡</span>
-        <span class="scrap-doodle doodle-memory-star" aria-hidden="true">✶</span>
-        <span class="scrap-doodle doodle-memory-arrow" aria-hidden="true">↗</span>
-        <span class="scrap-doodle doodle-memory-loop" aria-hidden="true"></span>
-        <article class="memory-piece polaroid wide-polaroid archive-editorial reveal" tabindex="0">
-          <span class="photo-tape tape-right" aria-hidden="true"></span>
-          <div class="archive-placeholder">insert tactile paper and editorial layout</div>
-          <div class="memory-caption">
-            <small>paper / layout / touch</small>
-            <p>tactile thinking</p>
-          </div>
-          <span class="memory-hover-note">paper grain makes digital things feel human</span>
-        </article>
+        <a class="internet-artifact portal-telegram reveal" href="https://t.me/mar_melkonian" target="_blank" rel="noopener" aria-label="Open Telegram profile">
+          <span class="portal-kicker">telegram</span>
+          <span class="telegram-widget" aria-hidden="true">
+            <i></i>
+            <b></b>
+          </span>
+          <strong>small notes, quick hellos, quiet project messages</strong>
+          <em>open line / soft digital signal</em>
+        </a>
       </div>
     </section>
   </main>
@@ -478,6 +393,6 @@
     </article>
   </section>
 
-  <script src="main.js?v=113" defer></script>
+  <script src="main.js?v=115" defer></script>
 </body>
 </html>

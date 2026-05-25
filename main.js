@@ -24,6 +24,8 @@ const caseWindowBar = document.querySelector(".case-window-bar");
 const memoryDesktop = document.querySelector(".board-canvas");
 const mobileMagicPopup = document.getElementById("mobile-magic-popup");
 const mobileMagicClose = document.querySelector(".mobile-magic-close");
+const notebookExplorer = document.querySelector(".notebook-explorer");
+const notebookMagnifier = document.querySelector(".notebook-magnifier");
 
 const memorySlugs = {
   SPROOT: "sproot",
@@ -154,6 +156,67 @@ const initPortfolioLoader = () => {
 };
 
 initPortfolioLoader();
+
+const initNotebookMagnifier = () => {
+  if (!notebookExplorer || !notebookMagnifier || prefersReducedMotion || !window.matchMedia("(pointer: fine)").matches) return;
+
+  const zoom = 2.15;
+  let targetX = 0;
+  let targetY = 0;
+  let currentX = 0;
+  let currentY = 0;
+  let isActive = false;
+  let frameId = 0;
+
+  const updateMagnifier = () => {
+    currentX += (targetX - currentX) * 0.16;
+    currentY += (targetY - currentY) * 0.16;
+
+    const rect = notebookExplorer.getBoundingClientRect();
+    const lensSize = notebookMagnifier.offsetWidth || 172;
+    const backgroundWidth = rect.width * zoom;
+    const backgroundHeight = rect.height * zoom;
+    const backgroundX = -(currentX * zoom - lensSize / 2);
+    const backgroundY = -(currentY * zoom - lensSize / 2);
+
+    notebookMagnifier.style.setProperty("--lens-x", `${currentX}px`);
+    notebookMagnifier.style.setProperty("--lens-y", `${currentY}px`);
+    notebookMagnifier.style.setProperty("--book-bg-width", `${backgroundWidth}px`);
+    notebookMagnifier.style.setProperty("--book-bg-height", `${backgroundHeight}px`);
+    notebookMagnifier.style.setProperty("--book-bg-x", `${backgroundX}px`);
+    notebookMagnifier.style.setProperty("--book-bg-y", `${backgroundY}px`);
+
+    if (isActive) frameId = window.requestAnimationFrame(updateMagnifier);
+  };
+
+  const moveLens = (event) => {
+    const rect = notebookExplorer.getBoundingClientRect();
+    targetX = Math.min(Math.max(event.clientX - rect.left, 0), rect.width);
+    targetY = Math.min(Math.max(event.clientY - rect.top, 0), rect.height);
+
+    if (!isActive) {
+      currentX = targetX;
+      currentY = targetY;
+      isActive = true;
+      notebookExplorer.classList.add("is-exploring");
+      window.cancelAnimationFrame(frameId);
+      updateMagnifier();
+    }
+  };
+
+  const hideLens = () => {
+    isActive = false;
+    notebookExplorer.classList.remove("is-exploring");
+    window.cancelAnimationFrame(frameId);
+  };
+
+  notebookExplorer.addEventListener("pointerenter", moveLens);
+  notebookExplorer.addEventListener("pointermove", moveLens);
+  notebookExplorer.addEventListener("pointerleave", hideLens);
+  notebookExplorer.addEventListener("pointercancel", hideLens);
+};
+
+initNotebookMagnifier();
 
 if (cursor && !prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
   let cursorX = window.innerWidth / 2;
@@ -513,7 +576,7 @@ const initCaseWindow = () => {
 initCaseWindow();
 
 const revealTargets = document.querySelectorAll(
-  ".float-card, .ticket-card, .about, .project-card, .section-heading, .memory-piece, .film-strip, .hand-note, .archive-vinyl, .archive-browser-window, .archive-map-card, .archive-type-card, .archive-coffee-card, .archive-dance-card"
+  ".float-card, .ticket-card, .about, .project-card, .section-heading, .memory-piece, .film-strip, .hand-note, .internet-artifact"
 );
 
 if ("IntersectionObserver" in window && !prefersReducedMotion) {
