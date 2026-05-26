@@ -19,6 +19,8 @@ const caseImageOne = document.getElementById("case-image-one");
 const caseImageTwo = document.getElementById("case-image-two");
 const caseTags = document.getElementById("case-tags");
 const caseLink = document.getElementById("case-link");
+const caseLiveLink = document.getElementById("case-live-link");
+const brandingFolderLinks = document.getElementById("branding-folder-links");
 const caseWindowClose = document.querySelector(".case-window-close");
 const caseWindowBar = document.querySelector(".case-window-bar");
 const memoryDesktop = document.querySelector(".board-canvas");
@@ -27,11 +29,58 @@ const mobileMagicClose = document.querySelector(".mobile-magic-close");
 const notebookExplorer = document.querySelector(".notebook-explorer");
 const notebookMagnifier = document.querySelector(".notebook-magnifier");
 
+const initContentProtection = () => {
+  const protectedKeys = new Set(["c", "x", "s", "u", "p", "a"]);
+
+  document.querySelectorAll("img").forEach((image) => {
+    image.setAttribute("draggable", "false");
+    image.setAttribute("oncontextmenu", "return false");
+  });
+
+  const stopEvent = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  };
+
+  ["contextmenu", "dragstart", "copy", "cut", "selectstart"].forEach((eventName) => {
+    document.addEventListener(eventName, stopEvent, true);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    const key = event.key.toLowerCase();
+    const isModifierShortcut = event.ctrlKey || event.metaKey;
+    const isDevToolsShortcut =
+      event.key === "F12" ||
+      ((event.ctrlKey || event.metaKey) && event.shiftKey && ["i", "j", "c"].includes(key)) ||
+      (event.metaKey && event.altKey && ["i", "j", "c"].includes(key));
+
+    if (isDevToolsShortcut || (isModifierShortcut && protectedKeys.has(key))) {
+      stopEvent(event);
+    }
+  }, true);
+
+  window.addEventListener("beforeprint", (event) => {
+    stopEvent(event);
+  });
+
+  const shield = document.createElement("div");
+  shield.className = "copyright-shield";
+  shield.setAttribute("aria-hidden", "true");
+  shield.textContent = "Copyright MarMel. All rights reserved.";
+  document.body.appendChild(shield);
+};
+
+initContentProtection();
+
 const memorySlugs = {
   SPROOT: "sproot",
   ICRUSH: "icrush",
   "DE SOI": "de-soi",
-  VAULTWIN: "vaultwin"
+  VAULTWIN: "vaultwin",
+  SARANG: "sarang",
+  BRANDING: "branding",
+  EVIDENCE: "evidence"
 };
 
 if ("scrollRestoration" in window.history) {
@@ -66,11 +115,40 @@ if (footerYear) {
 }
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const loaderSessionKey = "marmel-loader-seen";
+
+const shouldShowPortfolioLoader = () => {
+  const navigation = performance.getEntriesByType("navigation")[0];
+  const isRefresh = navigation?.type === "reload";
+  let hasSeenLoader = false;
+
+  try {
+    hasSeenLoader = sessionStorage.getItem(loaderSessionKey) === "true";
+  } catch (error) {
+    hasSeenLoader = false;
+  }
+
+  return isRefresh || !hasSeenLoader;
+};
 
 const initPortfolioLoader = () => {
   if (!portfolioLoader || !loaderProgress) {
     document.body.classList.remove("is-loading");
     return;
+  }
+
+  if (!shouldShowPortfolioLoader()) {
+    document.documentElement.classList.add("skip-loader");
+    document.body.classList.remove("is-loading", "loader-exiting");
+    portfolioLoader.remove();
+    return;
+  }
+
+  document.documentElement.classList.remove("skip-loader");
+  try {
+    sessionStorage.setItem(loaderSessionKey, "true");
+  } catch (error) {
+    // The loader still works if session storage is unavailable.
   }
 
   let progress = 0;
@@ -373,14 +451,16 @@ const caseStudies = {
     summary: "A media monitoring product shaped into a calmer, clearer workspace for scanning, sorting, and making sense of busy information.",
     note: "The magic was making dense data feel quiet enough to trust.",
     images: ["sproot-2.png", "sproot-1.png"],
-    tags: ["UX/UI", "Product", "Research", "Dashboard"]
+    tags: ["UX/UI", "Product", "Research", "Dashboard"],
+    liveUrl: "https://www.sproot.am"
   },
   ICRUSH: {
     title: "ICRUSH",
     summary: "A bright Web3 social world with expressive brand energy, playful interface moments, and a system built for personality.",
     note: "Keep the energy high, but make every interaction easy to follow.",
     images: ["icrush-1.png", "icrush-2.png"],
-    tags: ["Brand", "UX/UI", "Web3", "Social"]
+    tags: ["Brand", "UX/UI", "Web3", "Social"],
+    liveUrl: "https://www.icrush.io"
   },
   "DE SOI": {
     title: "DE SOI",
@@ -395,6 +475,43 @@ const caseStudies = {
     note: "Make the technical parts feel secure, human, and cinematic.",
     images: ["sproot-1.png", "icrush-2.png"],
     tags: ["Blockchain", "Identity", "UX/UI", "System"]
+  },
+  SARANG: {
+    title: "SARANG",
+    summary: "A Korean food delivery mobile app designed around appetizing visuals, quick ordering flows, and a warm everyday service experience.",
+    note: "Make choosing dinner feel fast, friendly, and a little bit delicious.",
+    images: ["sarang.jpg", "straw.jpg"],
+    tags: ["Mobile app", "Food delivery", "Korean app", "UX/UI"]
+  },
+  BRANDING: {
+    title: "BRANDING PROJECTS",
+    summary: "A collected folder of identity systems, brand atmospheres, and visual directions.",
+    note: "Three small worlds gathered into one messy, useful archive.",
+    images: ["icrush-1.png", "sarang.jpg"],
+    tags: ["Branding", "Identity", "Moodboards", "Visual systems"],
+    mood: "branding",
+    folders: [
+      {
+        label: "identity_01",
+        url: "https://www.behance.net/gallery/243719865/iCrush-WEB3-BRAND-IDENTITY-UXUI-DESIGN"
+      },
+      {
+        label: "mood_02",
+        url: "https://www.behance.net/gallery/162852245/-Love"
+      },
+      {
+        label: "system_03",
+        url: "https://www.behance.net/melkonyan_designer"
+      }
+    ]
+  },
+  EVIDENCE: {
+    title: "evidence_folder",
+    summary: "AI helps bring ideas to life, explore visual directions, and build experimental concepts faster. But the emotions, storytelling, art direction, and imagination come from the designer. This portfolio is proof of that collaboration: human feeling shaped through AI-assisted experimentation.",
+    note: "generated 482 versions. still moved one pixel manually. human emotions > machine perfection.",
+    images: ["me.jpeg", "me-cartoon2.png"],
+    tags: ["Creative process", "AI assisted", "Art direction", "Human imagination"],
+    mood: "evidence"
   }
 };
 
@@ -451,6 +568,8 @@ const initCaseWindow = () => {
     const study = caseStudies[key];
     if (!study) return;
 
+    caseWindow.classList.toggle("is-evidence-case", study.mood === "evidence");
+    caseWindow.classList.toggle("is-branding-case", study.mood === "branding");
     caseWindowTitle.textContent = study.title;
     caseTitle.textContent = study.title;
     caseSummary.textContent = study.summary;
@@ -460,6 +579,26 @@ const initCaseWindow = () => {
     caseImageOne.alt = `${study.title} pinned mockup`;
     caseImageTwo.alt = `${study.title} scrapbook screenshot`;
     caseLink.href = folder.href;
+    if (brandingFolderLinks) {
+      if (study.folders?.length) {
+        brandingFolderLinks.hidden = false;
+        brandingFolderLinks.innerHTML = study.folders.map((item, index) => (
+          `<a class="branding-mini-folder branding-mini-folder-${index + 1}" href="${item.url}" target="_blank" rel="noopener"><span></span><strong>${item.label}</strong><em>${item.url.replace(/^https?:\/\//, "")}</em></a>`
+        )).join("");
+      } else {
+        brandingFolderLinks.hidden = true;
+        brandingFolderLinks.innerHTML = "";
+      }
+    }
+    if (caseLiveLink) {
+      if (study.liveUrl) {
+        caseLiveLink.href = study.liveUrl;
+        caseLiveLink.hidden = false;
+      } else {
+        caseLiveLink.hidden = true;
+        caseLiveLink.removeAttribute("href");
+      }
+    }
     caseTags.innerHTML = study.tags.map((tag) => `<li>${tag}</li>`).join("");
   };
 
