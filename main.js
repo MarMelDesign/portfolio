@@ -30,54 +30,68 @@ const notebookExplorer = document.querySelector(".notebook-explorer");
 const notebookMagnifier = document.querySelector(".notebook-magnifier");
 const routeLinks = document.querySelectorAll("[data-workspace-route]");
 
-const initContentProtection = () => {
-  const protectedKeys = new Set(["s", "u", "p"]);
-
-// Provide a mailto fallback: try opening mail client and copy email to clipboard as fallback
 const initMailtoFallback = () => {
-  const journeyButtons = document.querySelectorAll('.journey-button[href^="mailto:"]');
+  const journeyButtons = document.querySelectorAll(".journey-button[href^='mailto:']");
   if (!journeyButtons.length) return;
-  const email = 'melkonyan.designer@gmail.com';
 
-  const showToast = (msg) => {
-    const t = document.createElement('div');
-    t.className = 'marmel-toast';
-    t.textContent = msg;
-    Object.assign(t.style, { position: 'fixed', right: '16px', bottom: '16px', padding: '10px 14px', background: '#111', color: '#fff', borderRadius: '8px', zIndex: 99999, boxShadow: '0 6px 18px rgba(0,0,0,.4)' });
-    document.body.appendChild(t);
-    setTimeout(() => t.classList.add('visible'), 10);
-    setTimeout(() => t.remove(), 3000);
+  const email = "melkonyan.designer@gmail.com";
+
+  const showToast = (message) => {
+    const toast = document.createElement("div");
+    toast.className = "marmel-toast";
+    toast.textContent = message;
+    Object.assign(toast.style, {
+      position: "fixed",
+      right: "16px",
+      bottom: "16px",
+      padding: "10px 14px",
+      background: "#111",
+      color: "#fff",
+      borderRadius: "8px",
+      zIndex: 99999,
+      boxShadow: "0 6px 18px rgba(0,0,0,.4)"
+    });
+    document.body.appendChild(toast);
+    window.setTimeout(() => toast.classList.add("visible"), 10);
+    window.setTimeout(() => toast.remove(), 3000);
   };
 
-  journeyButtons.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const href = btn.href;
+  const copyEmail = async () => {
+    if (navigator.clipboard?.writeText) {
       try {
-        window.location.href = href;
-      } catch (err) {
-        // ignore
+        await navigator.clipboard.writeText(email);
+        showToast("Email copied to clipboard");
+        return;
+      } catch (error) {
+        // Fall back to a temporary textarea below.
       }
+    }
 
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(email).then(() => {
-          showToast('Email copied to clipboard');
-        }).catch(() => {});
-      } else {
-        const ta = document.createElement('textarea');
-        ta.value = email;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        try { document.execCommand('copy'); showToast('Email copied to clipboard'); } catch (e) {}
-        ta.remove();
-      }
+    const textarea = document.createElement("textarea");
+    textarea.value = email;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      if (document.execCommand("copy")) showToast("Email copied to clipboard");
+    } catch (error) {
+      // The mailto link still opens even when clipboard access is unavailable.
+    }
+    textarea.remove();
+  };
+
+  journeyButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      window.setTimeout(copyEmail, 250);
     });
   });
 };
 
 initMailtoFallback();
+
+const initContentProtection = () => {
+  const protectedKeys = new Set(["s", "u", "p"]);
 
   document.querySelectorAll("img").forEach((image) => {
     image.setAttribute("draggable", "false");
@@ -695,7 +709,7 @@ const initMobileMagicPopup = () => {
     try {
       sessionStorage.setItem(dismissedKey, "true");
     } catch (error) {
-      console.warn("Could not remember mobile popup dismissal", error);
+      // The popup can still close if session storage is unavailable.
     }
   };
 
@@ -728,7 +742,11 @@ const initMobileMagicPopup = () => {
       closePopup();
     }
   });
-  mobileQuery.addEventListener?.("change", maybeShowPopup);
+  if (mobileQuery.addEventListener) {
+    mobileQuery.addEventListener("change", maybeShowPopup);
+  } else if (mobileQuery.addListener) {
+    mobileQuery.addListener(maybeShowPopup);
+  }
   maybeShowPopup();
 };
 
@@ -804,7 +822,21 @@ const caseStudies = {
 };
 
 const initCaseWindow = () => {
-  if (!caseWindowLayer || !caseWindow || !caseWindowBar) return;
+  const requiredCaseElements = [
+    caseWindowLayer,
+    caseWindow,
+    caseWindowBar,
+    caseWindowTitle,
+    caseTitle,
+    caseSummary,
+    caseNote,
+    caseImageOne,
+    caseImageTwo,
+    caseTags,
+    caseLink
+  ];
+
+  if (requiredCaseElements.some((element) => !element)) return;
 
   let lastTrigger = null;
   let isDragging = false;
