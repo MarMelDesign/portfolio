@@ -1,7 +1,13 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "outputDirectory": ".",
   "trailingSlash": false,
   "rewrites": [
+    {
+      "source": "/images/:path*",
+      "destination": "/public/images/:path*"
+    },
     {
       "source": "/workspace",
       "destination": "/index.html"
