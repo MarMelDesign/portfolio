@@ -2632,7 +2632,7 @@ body.ticket-open .footer {
   overflow: hidden;
   background:
     radial-gradient(circle at 34% 28%, rgba(255,255,255,.34), transparent 18%),
-    url("About/book.png");
+    url("/images/book.png");
   background-size: auto, var(--book-bg-width) var(--book-bg-height);
   background-position: 0 0, var(--book-bg-x) var(--book-bg-y);
   background-repeat: no-repeat;

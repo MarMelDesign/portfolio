@@ -33,6 +33,52 @@ const routeLinks = document.querySelectorAll("[data-workspace-route]");
 const initContentProtection = () => {
   const protectedKeys = new Set(["s", "u", "p"]);
 
+// Provide a mailto fallback: try opening mail client and copy email to clipboard as fallback
+const initMailtoFallback = () => {
+  const journeyButtons = document.querySelectorAll('.journey-button[href^="mailto:"]');
+  if (!journeyButtons.length) return;
+  const email = 'melkonyan.designer@gmail.com';
+
+  const showToast = (msg) => {
+    const t = document.createElement('div');
+    t.className = 'marmel-toast';
+    t.textContent = msg;
+    Object.assign(t.style, { position: 'fixed', right: '16px', bottom: '16px', padding: '10px 14px', background: '#111', color: '#fff', borderRadius: '8px', zIndex: 99999, boxShadow: '0 6px 18px rgba(0,0,0,.4)' });
+    document.body.appendChild(t);
+    setTimeout(() => t.classList.add('visible'), 10);
+    setTimeout(() => t.remove(), 3000);
+  };
+
+  journeyButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = btn.href;
+      try {
+        window.location.href = href;
+      } catch (err) {
+        // ignore
+      }
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(email).then(() => {
+          showToast('Email copied to clipboard');
+        }).catch(() => {});
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = email;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); showToast('Email copied to clipboard'); } catch (e) {}
+        ta.remove();
+      }
+    });
+  });
+};
+
+initMailtoFallback();
+
   document.querySelectorAll("img").forEach((image) => {
     image.setAttribute("draggable", "false");
     image.setAttribute("oncontextmenu", "return false");
@@ -693,7 +739,7 @@ const caseStudies = {
     title: "SPROOT",
     summary: "A media monitoring product shaped into a calmer, clearer workspace for scanning, sorting, and making sense of busy information.",
     note: "The magic was making dense data feel quiet enough to trust.",
-    images: ["optimized/sproot-2-1000.png", "optimized/sproot-1-1200.jpg"],
+    images: ["/images/sproot-2-1000.png", "/images/sproot-1-1200.jpg"],
     tags: ["UX/UI", "Product", "Research", "Dashboard"],
     liveUrl: "https://www.sproot.am"
   },
@@ -701,35 +747,35 @@ const caseStudies = {
     title: "ICRUSH",
     summary: "A bright Web3 social world with expressive brand energy, playful interface moments, and a system built for personality.",
     note: "Keep the energy high, but make every interaction easy to follow.",
-    images: ["optimized/icrush-1-1000.png", "optimized/icrush-2-1200.jpg"],
+    images: ["/images/icrush-1-1000.png", "/images/icrush-2-1200.jpg"],
     tags: ["Brand", "UX/UI", "Web3", "Social"]
   },
   "DE SOI": {
     title: "DE SOI",
     summary: "A soft romantic visual direction built around mood, texture, and editorial feeling.",
     note: "Let the atmosphere do some of the explaining.",
-    images: ["optimized/sarang-1200.jpg", "optimized/straw-1200.jpg"],
+    images: ["/images/sarang-1200.jpg", "/images/straw-1200.jpg"],
     tags: ["Visual design", "Moodboard", "Brand", "Editorial"]
   },
   VAULTWIN: {
     title: "VAULTWIN",
     summary: "A futuristic blockchain identity experience balanced with structure, contrast, and a polished product language.",
     note: "Make the technical parts feel secure, human, and cinematic.",
-    images: ["optimized/sproot-1-1200.jpg", "optimized/icrush-2-1200.jpg"],
+    images: ["/images/sproot-1-1200.jpg", "/images/icrush-2-1200.jpg"],
     tags: ["Blockchain", "Identity", "UX/UI", "System"]
   },
   SARANG: {
     title: "SARANG",
     summary: "A Korean food delivery mobile app designed around appetizing visuals, quick ordering flows, and a warm everyday service experience.",
     note: "Make choosing dinner feel fast, friendly, and a little bit delicious.",
-    images: ["optimized/sarang-1200.jpg", "optimized/straw-1200.jpg"],
+    images: ["/images/sarang-1200.jpg", "/images/straw-1200.jpg"],
     tags: ["Mobile app", "Food delivery", "Korean app", "UX/UI"]
   },
   BRANDING: {
     title: "BRANDING PROJECTS",
     summary: "A collected folder of identity systems, brand atmospheres, and visual directions.",
     note: "Three small worlds gathered into one messy, useful archive.",
-    images: ["optimized/icrush-1-1000.png", "optimized/sarang-1200.jpg"],
+    images: ["/images/icrush-1-1000.png", "/images/sarang-1200.jpg"],
     tags: ["Branding", "Identity", "Moodboards", "Visual systems"],
     mood: "branding",
     folders: [
@@ -751,7 +797,7 @@ const caseStudies = {
     title: "evidence_folder",
     summary: "AI helps bring ideas to life, explore visual directions, and build experimental concepts faster. But the emotions, storytelling, art direction, and imagination come from the designer. This portfolio is proof of that collaboration: human feeling shaped through AI-assisted experimentation.",
     note: "generated 482 versions. still moved one pixel manually. human emotions > machine perfection.",
-    images: ["me.jpeg", "optimized/me-cartoon2-720.png"],
+    images: ["/images/me.jpeg", "/images/me-cartoon2-720.png"],
     tags: ["Creative process", "AI assisted", "Art direction", "Human imagination"],
     mood: "evidence"
   }
