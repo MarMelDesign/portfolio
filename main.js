@@ -1003,6 +1003,8 @@ const initCaseWindow = () => {
     });
 
     folder.addEventListener("click", (event) => {
+      if (folder.dataset.casePage === "true") return;
+
       event.preventDefault();
       if (memoryDesktop && memorySlug) {
         memoryDesktop.classList.add(`memory-${memorySlug}-discovered`);
