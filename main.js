@@ -28,9 +28,10 @@ const mobileMagicPopup = document.getElementById("mobile-magic-popup");
 const mobileMagicClose = document.querySelector(".mobile-magic-close");
 const notebookExplorer = document.querySelector(".notebook-explorer");
 const notebookMagnifier = document.querySelector(".notebook-magnifier");
+const routeLinks = document.querySelectorAll("[data-workspace-route]");
 
 const initContentProtection = () => {
-  const protectedKeys = new Set(["c", "x", "s", "u", "p", "a"]);
+  const protectedKeys = new Set(["s", "u", "p"]);
 
   document.querySelectorAll("img").forEach((image) => {
     image.setAttribute("draggable", "false");
@@ -43,7 +44,7 @@ const initContentProtection = () => {
     return false;
   };
 
-  ["contextmenu", "dragstart", "copy", "cut", "selectstart"].forEach((eventName) => {
+  ["contextmenu", "dragstart"].forEach((eventName) => {
     document.addEventListener(eventName, stopEvent, true);
   });
 
@@ -83,15 +84,53 @@ const memorySlugs = {
   EVIDENCE: "evidence"
 };
 
+const workspaceRoutes = {
+  "/": "top",
+  "/index.html": "top",
+  "/workspace": "top",
+  "/workspace/": "top",
+  "/workspace/about": "about",
+  "/workspace/work": "work",
+  "/workspace/find-me": "internet"
+};
+
 if ("scrollRestoration" in window.history) {
   window.history.scrollRestoration = "manual";
 }
+
+const normalizePath = (path) => path.replace(/\/+$/, "") || "/";
+
+const getWorkspaceRoute = (path = window.location.pathname) => {
+  const normalized = normalizePath(path);
+  return workspaceRoutes[normalized] ? normalized : null;
+};
+
+const getWorkspaceTarget = (path = window.location.pathname) => {
+  const route = getWorkspaceRoute(path);
+  return route ? document.getElementById(workspaceRoutes[route]) : null;
+};
+
+const setActiveWorkspaceRoute = (path = window.location.pathname) => {
+  const activeRoute = getWorkspaceRoute(path) || "/workspace";
+
+  routeLinks.forEach((link) => {
+    const linkRoute = getWorkspaceRoute(new URL(link.href, window.location.origin).pathname);
+    const isActive = linkRoute === activeRoute || (activeRoute === "/" && linkRoute === "/workspace");
+    link.classList.toggle("is-active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+};
 
 const showHeroOnRefresh = () => {
   const navigation = performance.getEntriesByType("navigation")[0];
   const isRefresh = navigation?.type === "reload";
 
   if (!isRefresh) return;
+  if (getWorkspaceRoute() && getWorkspaceRoute() !== "/" && getWorkspaceRoute() !== "/index.html" && getWorkspaceRoute() !== "/workspace") return;
 
   if (window.location.hash) {
     window.history.replaceState(null, "", window.location.pathname + window.location.search);
@@ -109,6 +148,113 @@ const showHeroOnRefresh = () => {
 
 showHeroOnRefresh();
 window.addEventListener("pageshow", showHeroOnRefresh);
+
+const initWorkspaceRoutes = () => {
+  const routeScrollOffset = () => Math.min(24, Math.max(0, window.innerHeight * 0.03));
+  let routeTransitionTimer = 0;
+  let lastObservedRoute = getWorkspaceRoute() || "/workspace";
+
+  const scrollToRoute = (path, shouldPush = true, isInitial = false) => {
+    const target = getWorkspaceTarget(path);
+    const route = getWorkspaceRoute(path) || "/workspace";
+    if (!target) return;
+
+    window.clearTimeout(routeTransitionTimer);
+    document.body.classList.add("route-transitioning");
+    document.body.dataset.workspaceRoute = route.replace(/^\/workspace\/?/, "") || "home";
+
+    if (shouldPush && normalizePath(window.location.pathname) !== route) {
+      window.history.pushState({ workspaceRoute: route }, "", route);
+    } else if (!shouldPush && normalizePath(window.location.pathname) !== route) {
+      window.history.replaceState({ workspaceRoute: route }, "", route);
+    }
+
+    setActiveWorkspaceRoute(route);
+
+    const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+    if (isInitial || prefersReducedMotion) {
+      document.documentElement.style.scrollBehavior = "auto";
+    }
+
+    const top = target === document.getElementById("top")
+      ? 0
+      : window.scrollY + target.getBoundingClientRect().top - routeScrollOffset();
+
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: isInitial || prefersReducedMotion ? "auto" : "smooth"
+    });
+
+    if (isInitial || prefersReducedMotion) {
+      requestAnimationFrame(() => {
+        document.documentElement.style.scrollBehavior = previousScrollBehavior;
+      });
+    }
+
+    routeTransitionTimer = window.setTimeout(() => {
+      document.body.classList.remove("route-transitioning");
+    }, prefersReducedMotion ? 120 : 820);
+  };
+
+  routeLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const url = new URL(link.href, window.location.origin);
+      if (url.origin !== window.location.origin) return;
+      const route = getWorkspaceRoute(url.pathname);
+      if (!route) return;
+
+      event.preventDefault();
+      scrollToRoute(route, true, false);
+    });
+  });
+
+  window.addEventListener("popstate", () => {
+    scrollToRoute(getWorkspaceRoute() || "/workspace", false, false);
+  });
+
+  const initialRoute = getWorkspaceRoute();
+  if (initialRoute) {
+    window.history.replaceState({ workspaceRoute: initialRoute }, "", initialRoute);
+    window.addEventListener("load", () => {
+      window.setTimeout(() => {
+        scrollToRoute(initialRoute, false, initialRoute !== "/workspace" && initialRoute !== "/");
+      }, document.body.classList.contains("is-loading") ? 3900 : 120);
+    }, { once: true });
+  }
+
+  if ("IntersectionObserver" in window) {
+    const sectionRoutes = [
+      { route: "/workspace", element: document.querySelector(".hero") },
+      { route: "/workspace/about", element: document.getElementById("about") },
+      { route: "/workspace/work", element: document.getElementById("work") },
+      { route: "/workspace/find-me", element: document.getElementById("internet") }
+    ].filter((item) => item.element);
+
+    const observer = new IntersectionObserver((entries) => {
+      if (document.body.classList.contains("route-transitioning")) return;
+
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (!visible) return;
+
+      const next = sectionRoutes.find((item) => item.element === visible.target);
+      if (!next || next.route === lastObservedRoute) return;
+
+      lastObservedRoute = next.route;
+      window.history.replaceState({ workspaceRoute: next.route }, "", next.route);
+      setActiveWorkspaceRoute(next.route);
+    }, {
+      threshold: [0.36, 0.58],
+      rootMargin: "-18% 0px -42% 0px"
+    });
+
+    sectionRoutes.forEach(({ element }) => observer.observe(element));
+  }
+
+  setActiveWorkspaceRoute();
+};
 
 if (footerYear) {
   footerYear.textContent = new Date().getFullYear();
@@ -155,8 +301,8 @@ const initPortfolioLoader = () => {
   let loaded = document.readyState === "complete";
   let phraseIndex = -1;
   const startedAt = performance.now();
-  const minDuration = prefersReducedMotion ? 500 : 3900;
-  const settleDelay = prefersReducedMotion ? 120 : 940;
+  const minDuration = prefersReducedMotion ? 450 : 2200;
+  const settleDelay = prefersReducedMotion ? 100 : 520;
   const phrases = [
     "preparing something beautiful...",
     "warming up the creative room...",
@@ -192,9 +338,12 @@ const initPortfolioLoader = () => {
       document.body.classList.add("loader-exiting");
       portfolioLoader.setAttribute("aria-hidden", "true");
       window.setTimeout(() => {
+        if (trackLoaderPointer) {
+          window.removeEventListener("pointermove", trackLoaderPointer);
+        }
         document.body.classList.remove("is-loading", "loader-exiting");
         portfolioLoader.remove();
-      }, prefersReducedMotion ? 180 : 1300);
+      }, prefersReducedMotion ? 180 : 900);
     }, settleDelay);
   };
 
@@ -220,13 +369,15 @@ const initPortfolioLoader = () => {
     }, { once: true });
   }
 
+  let trackLoaderPointer = null;
   if (!prefersReducedMotion && window.matchMedia("(pointer: fine)").matches) {
-    window.addEventListener("pointermove", (event) => {
+    trackLoaderPointer = (event) => {
       const x = (event.clientX / window.innerWidth - .5).toFixed(3);
       const y = (event.clientY / window.innerHeight - .5).toFixed(3);
       portfolioLoader.style.setProperty("--loader-x", x);
       portfolioLoader.style.setProperty("--loader-y", y);
-    });
+    };
+    window.addEventListener("pointermove", trackLoaderPointer);
   }
 
   setProgress(0);
@@ -234,6 +385,7 @@ const initPortfolioLoader = () => {
 };
 
 initPortfolioLoader();
+initWorkspaceRoutes();
 
 const initNotebookMagnifier = () => {
   if (!notebookExplorer || !notebookMagnifier || prefersReducedMotion || !window.matchMedia("(pointer: fine)").matches) return;
@@ -301,22 +453,44 @@ if (cursor && !prefersReducedMotion && window.matchMedia("(pointer: fine)").matc
   let cursorY = window.innerHeight / 2;
   let targetX = cursorX;
   let targetY = cursorY;
+  let cursorFrame = 0;
+  let idleTimer = 0;
+  let isRenderingCursor = false;
 
   document.body.classList.add("cursor-ready");
+
+  const stopCursor = () => {
+    isRenderingCursor = false;
+    window.cancelAnimationFrame(cursorFrame);
+  };
+
+  const startCursor = () => {
+    if (isRenderingCursor || document.hidden) return;
+    isRenderingCursor = true;
+    renderCursor();
+  };
 
   window.addEventListener("mousemove", (event) => {
     targetX = event.clientX;
     targetY = event.clientY;
+    startCursor();
+    window.clearTimeout(idleTimer);
+    idleTimer = window.setTimeout(stopCursor, 1200);
   });
 
   const renderCursor = () => {
+    if (!isRenderingCursor || document.hidden) return;
     cursorX += (targetX - cursorX) * 0.18;
     cursorY += (targetY - cursorY) * 0.18;
     cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
-    requestAnimationFrame(renderCursor);
+    cursorFrame = requestAnimationFrame(renderCursor);
   };
 
-  renderCursor();
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopCursor();
+    }
+  });
 }
 
 const initTicketExpansion = () => {
@@ -324,6 +498,28 @@ const initTicketExpansion = () => {
 
   const closeButtons = ticketExpanded.querySelectorAll(".ticket-backdrop, .ticket-close");
   const closeButton = ticketExpanded.querySelector(".ticket-close");
+  const ticketPanel = ticketExpanded.querySelector(".ticket-panel");
+  let ticketScrollY = 0;
+
+  const getTicketFocusable = () => Array.from(ticketExpanded.querySelectorAll(
+    "button:not([disabled]), a[href], [tabindex]:not([tabindex='-1'])"
+  )).filter((element) => element.offsetParent !== null);
+
+  const lockTicketScroll = () => {
+    ticketScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    document.documentElement.classList.add("ticket-open");
+    document.body.classList.add("ticket-open");
+    document.body.style.top = `-${ticketScrollY}px`;
+    document.body.style.width = "100%";
+  };
+
+  const unlockTicketScroll = () => {
+    document.documentElement.classList.remove("ticket-open");
+    document.body.classList.remove("ticket-open");
+    document.body.style.top = "";
+    document.body.style.width = "";
+    window.scrollTo(0, ticketScrollY);
+  };
 
   const openTicket = () => {
     if (document.body.classList.contains("ticket-open") || ticketCard.classList.contains("is-pulling")) return;
@@ -332,16 +528,40 @@ const initTicketExpansion = () => {
 
     window.setTimeout(() => {
       ticketExpanded.setAttribute("aria-hidden", "false");
-      document.body.classList.add("ticket-open");
+      ticketPanel?.setAttribute("aria-modal", "true");
+      lockTicketScroll();
       ticketCard.classList.remove("is-pulling");
       window.setTimeout(() => closeButton?.focus(), 420);
     }, prefersReducedMotion ? 0 : 360);
   };
 
   const closeTicket = () => {
-    document.body.classList.remove("ticket-open");
+    unlockTicketScroll();
     ticketExpanded.setAttribute("aria-hidden", "true");
-    ticketCard.focus();
+    ticketPanel?.setAttribute("aria-modal", "false");
+    ticketCard.focus({ preventScroll: true });
+  };
+
+  const trapTicketFocus = (event) => {
+    if (event.key !== "Tab" || !document.body.classList.contains("ticket-open")) return;
+
+    const focusable = getTicketFocusable();
+    if (!focusable.length) {
+      event.preventDefault();
+      closeButton?.focus();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   };
 
   ticketCard.addEventListener("click", (event) => {
@@ -358,6 +578,7 @@ const initTicketExpansion = () => {
       closeTicket();
     }
   });
+  window.addEventListener("keydown", trapTicketFocus);
 };
 
 initTicketExpansion();
@@ -425,20 +646,42 @@ const initMobileMagicPopup = () => {
   const closePopup = () => {
     mobileMagicPopup.classList.remove("is-visible");
     mobileMagicPopup.setAttribute("aria-hidden", "true");
-    sessionStorage.setItem(dismissedKey, "true");
+    try {
+      sessionStorage.setItem(dismissedKey, "true");
+    } catch (error) {
+      console.warn("Could not remember mobile popup dismissal", error);
+    }
   };
 
   const maybeShowPopup = () => {
-    if (!mobileQuery.matches || sessionStorage.getItem(dismissedKey) === "true") return;
+    let wasDismissed = false;
+    try {
+      wasDismissed = sessionStorage.getItem(dismissedKey) === "true";
+    } catch (error) {
+      wasDismissed = false;
+    }
+
+    if (!mobileQuery.matches || wasDismissed) return;
 
     window.setTimeout(() => {
-      if (!mobileQuery.matches || sessionStorage.getItem(dismissedKey) === "true") return;
+      let dismissedDuringDelay = false;
+      try {
+        dismissedDuringDelay = sessionStorage.getItem(dismissedKey) === "true";
+      } catch (error) {
+        dismissedDuringDelay = false;
+      }
+      if (!mobileQuery.matches || dismissedDuringDelay) return;
       mobileMagicPopup.classList.add("is-visible");
       mobileMagicPopup.setAttribute("aria-hidden", "false");
     }, 900);
   };
 
   mobileMagicClose.addEventListener("click", closePopup);
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && mobileMagicPopup.classList.contains("is-visible")) {
+      closePopup();
+    }
+  });
   mobileQuery.addEventListener?.("change", maybeShowPopup);
   maybeShowPopup();
 };
@@ -450,7 +693,7 @@ const caseStudies = {
     title: "SPROOT",
     summary: "A media monitoring product shaped into a calmer, clearer workspace for scanning, sorting, and making sense of busy information.",
     note: "The magic was making dense data feel quiet enough to trust.",
-    images: ["sproot-2.png", "sproot-1.png"],
+    images: ["optimized/sproot-2-1000.png", "optimized/sproot-1-1200.jpg"],
     tags: ["UX/UI", "Product", "Research", "Dashboard"],
     liveUrl: "https://www.sproot.am"
   },
@@ -458,36 +701,35 @@ const caseStudies = {
     title: "ICRUSH",
     summary: "A bright Web3 social world with expressive brand energy, playful interface moments, and a system built for personality.",
     note: "Keep the energy high, but make every interaction easy to follow.",
-    images: ["icrush-1.png", "icrush-2.png"],
-    tags: ["Brand", "UX/UI", "Web3", "Social"],
-    liveUrl: "https://www.icrush.io"
+    images: ["optimized/icrush-1-1000.png", "optimized/icrush-2-1200.jpg"],
+    tags: ["Brand", "UX/UI", "Web3", "Social"]
   },
   "DE SOI": {
     title: "DE SOI",
     summary: "A soft romantic visual direction built around mood, texture, and editorial feeling.",
     note: "Let the atmosphere do some of the explaining.",
-    images: ["sarang.jpg", "straw.jpg"],
+    images: ["optimized/sarang-1200.jpg", "optimized/straw-1200.jpg"],
     tags: ["Visual design", "Moodboard", "Brand", "Editorial"]
   },
   VAULTWIN: {
     title: "VAULTWIN",
     summary: "A futuristic blockchain identity experience balanced with structure, contrast, and a polished product language.",
     note: "Make the technical parts feel secure, human, and cinematic.",
-    images: ["sproot-1.png", "icrush-2.png"],
+    images: ["optimized/sproot-1-1200.jpg", "optimized/icrush-2-1200.jpg"],
     tags: ["Blockchain", "Identity", "UX/UI", "System"]
   },
   SARANG: {
     title: "SARANG",
     summary: "A Korean food delivery mobile app designed around appetizing visuals, quick ordering flows, and a warm everyday service experience.",
     note: "Make choosing dinner feel fast, friendly, and a little bit delicious.",
-    images: ["sarang.jpg", "straw.jpg"],
+    images: ["optimized/sarang-1200.jpg", "optimized/straw-1200.jpg"],
     tags: ["Mobile app", "Food delivery", "Korean app", "UX/UI"]
   },
   BRANDING: {
     title: "BRANDING PROJECTS",
     summary: "A collected folder of identity systems, brand atmospheres, and visual directions.",
     note: "Three small worlds gathered into one messy, useful archive.",
-    images: ["icrush-1.png", "sarang.jpg"],
+    images: ["optimized/icrush-1-1000.png", "optimized/sarang-1200.jpg"],
     tags: ["Branding", "Identity", "Moodboards", "Visual systems"],
     mood: "branding",
     folders: [
@@ -509,7 +751,7 @@ const caseStudies = {
     title: "evidence_folder",
     summary: "AI helps bring ideas to life, explore visual directions, and build experimental concepts faster. But the emotions, storytelling, art direction, and imagination come from the designer. This portfolio is proof of that collaboration: human feeling shaped through AI-assisted experimentation.",
     note: "generated 482 versions. still moved one pixel manually. human emotions > machine perfection.",
-    images: ["me.jpeg", "me-cartoon2.png"],
+    images: ["me.jpeg", "optimized/me-cartoon2-720.png"],
     tags: ["Creative process", "AI assisted", "Art direction", "Human imagination"],
     mood: "evidence"
   }
@@ -526,6 +768,7 @@ const initCaseWindow = () => {
   let windowY = 0;
   let caseScrollY = 0;
   let focusReleaseTimer = 0;
+  const canDragWindow = window.matchMedia("(pointer: fine) and (min-width: 901px)");
 
   const lockCaseFocus = () => {
     caseScrollY = window.scrollY || document.documentElement.scrollTop || 0;
@@ -600,6 +843,31 @@ const initCaseWindow = () => {
       }
     }
     caseTags.innerHTML = study.tags.map((tag) => `<li>${tag}</li>`).join("");
+  };
+
+  const trapCaseFocus = (event) => {
+    if (event.key !== "Tab" || !caseWindowLayer.classList.contains("is-open")) return;
+
+    const focusable = Array.from(caseWindow.querySelectorAll(
+      'a[href]:not([hidden]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )).filter((element) => element.offsetParent !== null);
+
+    if (!focusable.length) {
+      event.preventDefault();
+      caseWindowClose?.focus();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   };
 
   const openCaseWindow = (folder) => {
@@ -677,8 +945,10 @@ const initCaseWindow = () => {
       closeCaseWindow();
     }
   });
+  window.addEventListener("keydown", trapCaseFocus);
 
   caseWindowBar.addEventListener("pointerdown", (event) => {
+    if (!canDragWindow.matches) return;
     if (event.target.closest("button")) return;
 
     const rect = caseWindow.getBoundingClientRect();

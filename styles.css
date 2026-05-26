@@ -23,12 +23,6 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 html { background: #eadcc7; }
-html,
-body {
-  -webkit-user-select: none;
-  user-select: none;
-  -webkit-touch-callout: none;
-}
 body {
   position: relative;
   margin: 0;
@@ -84,6 +78,7 @@ button {
   letter-spacing: .02em;
   pointer-events: none;
   mix-blend-mode: multiply;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 
@@ -189,6 +184,32 @@ body.case-focus-open .memory-fragment,
 body.case-focus-open .memory-particle {
   animation-play-state: paused !important;
   transition: none;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 230;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(255,250,237,.34), transparent 42%),
+    linear-gradient(90deg, rgba(104,31,45,.1), transparent 28%, transparent 72%, rgba(42,23,18,.12));
+  opacity: 0;
+  transform: scale(1.015);
+  transition:
+    opacity .42s cubic-bezier(.16, 1, .3, 1),
+    transform .64s cubic-bezier(.16, 1, .3, 1);
+}
+
+body.route-transitioning::before {
+  opacity: .72;
+  transform: scale(1);
+}
+
+body.route-transitioning main {
+  filter: saturate(.96) brightness(.98);
+  transition: filter .64s cubic-bezier(.16, 1, .3, 1);
 }
 
 .portfolio-loader {
@@ -358,6 +379,7 @@ body.loader-exiting .portfolio-loader {
   color: rgba(244,229,201,.68);
   font-family: var(--hand);
   font-size: 1rem;
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -768,6 +790,7 @@ body.loader-exiting .portfolio-loader {
   font-family: var(--mono);
   font-size: 11px;
   text-align: center;
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
 
@@ -1278,9 +1301,32 @@ body.loader-exiting .portfolio-loader {
 }
 .nav-links a {
   opacity: .7;
+  position: relative;
+  transition: opacity .28s ease, transform .28s ease;
 }
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a.is-active,
+.nav-logo.is-active {
   opacity: 1;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -.42rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(.35);
+  transform-origin: 50% 50%;
+  transition: opacity .28s ease, transform .38s cubic-bezier(.16, 1, .3, 1);
+}
+
+.nav-links a.is-active::after {
+  opacity: .58;
+  transform: scaleX(1);
 }
 
 .mobile-magic-popup {
@@ -1302,6 +1348,7 @@ body.loader-exiting .portfolio-loader {
   background: rgba(251,242,223,.94);
   box-shadow: 0 18px 48px rgba(42,23,18,.18);
   color: var(--espresso);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   transform: translateY(120%);
   opacity: 0;
@@ -1785,8 +1832,9 @@ main {
   border: 0;
   background: rgba(23,17,15,.34);
   opacity: 0;
+  -webkit-backdrop-filter: blur(0);
   backdrop-filter: blur(0);
-  transition: opacity .45s ease, backdrop-filter .45s ease;
+  transition: opacity .45s ease, backdrop-filter .45s ease, -webkit-backdrop-filter .45s ease;
 }
 .ticket-panel {
   position: relative;
@@ -1826,11 +1874,29 @@ main {
   cursor: pointer;
   font-size: 1.5rem;
   line-height: 1;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
-body.ticket-open {
+html.ticket-open {
   overflow: hidden;
 }
+
+body.ticket-open {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.ticket-card,
+.ticket-backdrop,
+.ticket-close,
+.project-card,
+.case-link,
+.branding-mini-folder,
+.mobile-magic-close {
+  touch-action: manipulation;
+}
+
 body.ticket-open .ticket-expanded {
   pointer-events: auto;
 }
@@ -1840,6 +1906,7 @@ body.ticket-open .ticket-card {
 }
 body.ticket-open .ticket-backdrop {
   opacity: 1;
+  -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 }
 body.ticket-open .ticket-panel {
@@ -2320,6 +2387,7 @@ body.ticket-open .footer {
   background: rgba(244,229,201,.18);
   color: var(--cream);
   cursor: pointer;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 .play-icon {
@@ -2573,6 +2641,7 @@ body.ticket-open .footer {
     inset 0 0 34px rgba(255,255,255,.18),
     0 18px 34px rgba(42,23,18,.24),
     0 0 42px rgba(255,226,167,.24);
+  -webkit-backdrop-filter: blur(1.5px) saturate(1.08);
   backdrop-filter: blur(1.5px) saturate(1.08);
   transform: translate3d(
     calc(var(--lens-x) - 50%),
@@ -3204,6 +3273,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   border-radius: 4px;
   background: rgba(255,255,255,.46);
   box-shadow: 0 8px 18px rgba(39,31,21,.08);
+  -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
 }
 .tape-left {
@@ -3406,6 +3476,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   background-size: auto, 12px 12px, auto;
   box-shadow: 0 20px 42px rgba(42,23,18,.12), inset 0 1px 0 rgba(255,255,255,.48);
   color: rgba(42,23,18,.6);
+  -webkit-backdrop-filter: blur(10px) saturate(1.05);
   backdrop-filter: blur(10px) saturate(1.05);
   opacity: .88;
   animation: thoughtDrift var(--thought-speed, 8s) ease-in-out infinite;
@@ -4413,6 +4484,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   background: rgba(255,250,237,.64);
   color: rgba(42,23,18,.64);
   box-shadow: 0 18px 44px rgba(42,23,18,.12);
+  -webkit-backdrop-filter: blur(16px) saturate(1.12);
   backdrop-filter: blur(16px) saturate(1.12);
   animation: desktopSavedToast 9s ease-in-out infinite;
 }
@@ -4615,6 +4687,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   border-radius: 999px;
   background: rgba(251,242,223,.76);
   box-shadow: 0 12px 24px rgba(15,15,13,.08);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
 .figma-toolbar span {
@@ -4826,6 +4899,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
     radial-gradient(ellipse at 82% 18%, rgba(42,23,18,.14), transparent 34%),
     radial-gradient(ellipse at center, transparent 0 46%, rgba(42,23,18,.3) 100%),
     linear-gradient(135deg, rgba(244,229,201,.44), rgba(104,31,45,.16));
+  -webkit-backdrop-filter: blur(7px) saturate(.94) brightness(.9);
   backdrop-filter: blur(7px) saturate(.94) brightness(.9);
 }
 
@@ -4860,6 +4934,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
     linear-gradient(135deg, rgba(255,250,237,.72), rgba(234,220,199,.56)),
     radial-gradient(circle at 82% 12%, rgba(255,226,167,.38), transparent 34%);
   box-shadow: 0 44px 120px rgba(42,23,18,.28), inset 0 1px 0 rgba(255,255,255,.72);
+  -webkit-backdrop-filter: blur(22px) saturate(1.14);
   backdrop-filter: blur(22px) saturate(1.14);
   opacity: 0;
   pointer-events: none;
@@ -5584,13 +5659,29 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   }
   .case-window {
     width: calc(100vw - 1rem);
-    max-height: calc(100vh - 1rem);
+    max-height: calc(100svh - 1rem);
+    box-shadow: 0 24px 64px rgba(42,23,18,.24), inset 0 1px 0 rgba(255,255,255,.72);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    filter: none;
+    will-change: transform, opacity;
+  }
+  .case-window-layer.is-open .case-window,
+  .case-window-layer.is-closing .case-window {
+    filter: none;
+  }
+  .case-window-layer::before {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
   .case-window-content {
     min-height: auto;
+    max-height: calc(100svh - 58px);
     display: grid;
     gap: 1rem;
     padding: 1rem;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .case-paper,
   .case-mockup,
@@ -5657,6 +5748,20 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   .branding-mini-folder {
     min-height: 136px;
     transform: none;
+  }
+  .case-window.is-evidence-case {
+    box-shadow: 0 28px 72px rgba(42,23,18,.28), inset 0 1px 0 rgba(255,255,255,.72);
+  }
+  body.case-focus-open > .nav,
+  body.case-focus-open > .mobile-magic-popup,
+  body.case-focus-open > main,
+  body.case-focus-open > .footer {
+    filter: none;
+    transform: none;
+  }
+  .case-window-bar {
+    cursor: default;
+    touch-action: manipulation;
   }
 }
 
@@ -5750,6 +5855,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   border-radius: 12px 12px 4px 4px;
   background: rgba(255,250,237,.62);
   box-shadow: 0 18px 42px rgba(42,23,18,.1);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   color: rgba(42,23,18,.52);
   transform: rotate(var(--tab-r, 0deg));
@@ -6890,6 +6996,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   background: rgba(251,242,223,.72);
   color: rgba(42,23,18,.72);
   box-shadow: 0 14px 34px rgba(42,23,18,.08);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   font: 12px var(--mono);
   text-transform: lowercase;
@@ -7539,9 +7646,29 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   }
   .ticket-panel {
     width: min(92vw, 520px);
+    max-height: 86svh;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 28px 76px rgba(42,23,18,.26);
   }
   .ticket-panel-image {
+    filter: none;
     transform: rotate(-2deg);
+  }
+  body.ticket-open .ticket-backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  body.ticket-open .ticket-panel {
+    box-shadow: 0 30px 82px rgba(42,23,18,.3);
+  }
+  body.ticket-open .hero-center,
+  body.ticket-open .hero-right,
+  body.ticket-open .about,
+  body.ticket-open .work,
+  body.ticket-open .scrapbook-section,
+  body.ticket-open .footer {
+    filter: none;
   }
   .hanging-badge {
     width: 100%;

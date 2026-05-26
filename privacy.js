@@ -3,7 +3,7 @@ const updatedDate = document.getElementById('privacy-last-updated');
 const portfolioBackLinks = document.querySelectorAll('a[href="index.html"]');
 
 const initContentProtection = () => {
-  const protectedKeys = new Set(['c', 'x', 's', 'u', 'p', 'a']);
+  const protectedKeys = new Set(['s', 'u', 'p']);
 
   document.querySelectorAll('img').forEach((image) => {
     image.setAttribute('draggable', 'false');
@@ -16,7 +16,7 @@ const initContentProtection = () => {
     return false;
   };
 
-  ['contextmenu', 'dragstart', 'copy', 'cut', 'selectstart'].forEach((eventName) => {
+  ['contextmenu', 'dragstart'].forEach((eventName) => {
     document.addEventListener(eventName, stopEvent, true);
   });
 
