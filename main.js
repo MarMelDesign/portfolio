@@ -150,6 +150,7 @@ const workspaceRoutes = {
   "/workspace": "top",
   "/workspace/": "top",
   "/workspace/about": "about",
+  "/workspace/playground": "work",
   "/workspace/work": "work",
   "/workspace/find-me": "internet"
 };
@@ -175,7 +176,10 @@ const setActiveWorkspaceRoute = (path = window.location.pathname) => {
 
   routeLinks.forEach((link) => {
     const linkRoute = getWorkspaceRoute(new URL(link.href, window.location.origin).pathname);
-    const isActive = linkRoute === activeRoute || (activeRoute === "/" && linkRoute === "/workspace");
+    const isActive =
+      linkRoute === activeRoute ||
+      (activeRoute === "/" && linkRoute === "/workspace") ||
+      (linkRoute && workspaceRoutes[linkRoute] === workspaceRoutes[activeRoute]);
     link.classList.toggle("is-active", isActive);
     if (isActive) {
       link.setAttribute("aria-current", "page");
@@ -183,6 +187,29 @@ const setActiveWorkspaceRoute = (path = window.location.pathname) => {
       link.removeAttribute("aria-current");
     }
   });
+};
+
+const redirectUnknownPortfolioRoute = () => {
+  const knownStaticPages = new Set([
+    "/",
+    "/index.html",
+    "/404",
+    "/404.html",
+    "/de-soi.html",
+    "/privacy.html",
+    "/resume.html"
+  ]);
+  const path = normalizePath(window.location.pathname);
+
+  if (getWorkspaceRoute(path) || knownStaticPages.has(path) || path.includes(".")) return;
+
+  try {
+    sessionStorage.setItem(loaderSessionKey, "true");
+  } catch (error) {
+    // The redirect still works if session storage is unavailable.
+  }
+
+  window.location.replace("/404.html");
 };
 
 const showHeroOnRefresh = () => {
@@ -444,6 +471,7 @@ const initPortfolioLoader = () => {
   tick();
 };
 
+redirectUnknownPortfolioRoute();
 initPortfolioLoader();
 initWorkspaceRoutes();
 
@@ -647,6 +675,7 @@ const initPlaylistPlayer = () => {
   if (!playlistCard || !playlistToggle || !softFocusAudio) return;
 
   let isPlaying = false;
+  let playlistPointerStart = null;
 
   const startMusic = async () => {
     try {
@@ -680,6 +709,35 @@ const initPlaylistPlayer = () => {
   playlistToggle.addEventListener("click", async (event) => {
     event.preventDefault();
     event.stopPropagation();
+
+    if (isPlaying) {
+      stopMusic();
+    } else {
+      await startMusic();
+    }
+  });
+
+  playlistCard.addEventListener("pointerdown", (event) => {
+    if (event.target.closest("button, a, input, textarea, select, audio")) {
+      playlistPointerStart = null;
+      return;
+    }
+
+    playlistPointerStart = {
+      x: event.clientX,
+      y: event.clientY
+    };
+  });
+
+  playlistCard.addEventListener("click", async (event) => {
+    if (event.target.closest("button, a, input, textarea, select, audio")) return;
+
+    const pointerTravel = playlistPointerStart
+      ? Math.hypot(event.clientX - playlistPointerStart.x, event.clientY - playlistPointerStart.y)
+      : 0;
+    playlistPointerStart = null;
+
+    if (pointerTravel > 8) return;
 
     if (isPlaying) {
       stopMusic();

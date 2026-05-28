@@ -13,13 +13,25 @@
       "destination": "/index.html"
     },
     {
-      "source": "/workspace/:path*",
+      "source": "/workspace/about",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/workspace/work",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/workspace/playground",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/workspace/find-me",
       "destination": "/index.html"
     }
   ],
   "headers": [
     {
-      "source": "/(.*)\\.(png|jpg|jpeg|gif|pdf|mp3|css|js)",
+      "source": "/(.*)\\.(png|jpg|jpeg|gif|webp|avif|svg|pdf|mp3|css|js|woff|woff2)",
       "headers": [
         {
           "key": "Cache-Control",
