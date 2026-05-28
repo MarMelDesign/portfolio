@@ -237,6 +237,8 @@ showHeroOnRefresh();
 window.addEventListener("pageshow", showHeroOnRefresh);
 
 const initWorkspaceRoutes = () => {
+  if (!routeLinks.length) return;
+
   const routeScrollOffset = () => Math.min(24, Math.max(0, window.innerHeight * 0.03));
   let routeTransitionTimer = 0;
   let lastObservedRoute = getWorkspaceRoute() || "/workspace";
