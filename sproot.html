@@ -8,30 +8,219 @@
   <title>SPROOT Case Study | MarMel</title>
   <link rel="icon" type="image/png" href="/images/flaticon-180.png" />
   <link rel="apple-touch-icon" href="/images/flaticon-180.png" />
-  <link rel="stylesheet" href="/styles.css?v=176" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css?v=177" />
+  <style>
+    #process .portfolio-case-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    #process .portfolio-case-gallery figure {
+      margin: 0;
+    }
+
+    #process .portfolio-case-gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      border-radius: 24px;
+    }
+
+    .sproot-prototype-frame {
+      overflow: hidden;
+      width: 100%;
+      margin-top: 1.4rem;
+      border: 1px solid rgba(42,23,18,.12);
+      border-radius: 24px;
+      background: rgba(255,250,237,.56);
+    }
+
+    .sproot-prototype-frame iframe {
+      display: block;
+      width: 100%;
+      height: min(88vw, 1349px);
+      min-height: 620px;
+      border: 0;
+      -webkit-clip-path: inset(2px 2px);
+      clip-path: inset(2px 2px);
+    }
+
+    .sproot-statement-image {
+      overflow: hidden;
+      margin: 1.4rem 0 0;
+      border: 1px solid rgba(42,23,18,.12);
+      border-radius: 24px;
+      background: rgba(255,250,237,.56);
+    }
+
+    .sproot-statement-image img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
-<body class="case-study-page de-soi-page sproot-page">
-  <main class="case-study-main de-soi-case-main">
-    <div class="de-soi-case-layout">
-      <aside class="de-soi-case-tabs" aria-label="Case study sections">
-        <a href="#problem">Problem</a><a href="#research">Research</a><a href="#ux-strategy">UX Strategy</a><a href="#wireframes">Wireframes</a><a href="#ui-system">UI System</a><a href="#homepage-breakdown">Homepage Breakdown</a><a href="#product-experience">Product Experience</a><a href="#motion">Motion</a><a href="#final-outcome">Final Outcome</a><a href="#reflection">Reflection</a>
-        <div class="de-soi-case-actions" aria-label="Case study actions">
-          <a href="/#work">Back to work</a>
-          <a href="https://www.behance.net/gallery/244905297/Media-Monitoring-UXUI" target="_blank" rel="noopener">Original case</a>
-        </div>
+<body class="portfolio-case-page sproot-page">
+  <main class="portfolio-case-main">
+    <nav class="portfolio-case-nav" aria-label="Case study navigation">
+      <a class="portfolio-case-brand" href="/">MarMel</a>
+      <div>
+        <a href="/#about">About</a>
+        <a href="/#work">Work</a>
+        <a href="/resume.html">Resume</a>
+        <a href="https://www.sproot.am" target="_blank" rel="noopener">Live Website</a>
+      </div>
+    </nav>
+
+    <header class="portfolio-case-hero">
+      <div>
+        <p class="portfolio-case-kicker">UX/UI case study</p>
+        <h1>SPROOT</h1>
+        <p class="portfolio-case-summary">Sproot is a digital platform for monitoring, analyzing, and structuring media content. The product helps companies, analysts, and PR specialists track mentions, analyze information trends, and make data-driven decisions rather than relying on intuition.</p>
+      </div>
+      <ul class="sproot-case-tags" aria-label="Project tags">
+        <li>2025</li>
+        <li>Web &amp; Mobile</li>
+        <li>Figma</li>
+        <li>Photoshop</li>
+      </ul>
+    </header>
+
+    <figure class="portfolio-case-visual">
+      <img src="/images/cases/sproot/sproot%201.jpg" width="1920" height="2102" alt="SPROOT case study hero screen" decoding="async" />
+    </figure>
+
+    <div class="portfolio-case-layout">
+      <aside class="portfolio-case-rail" aria-label="Case sections">
+        <a href="#overview">Overview</a>
+        <a href="#role">Role</a>
+        <a href="#problem">Problem</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#process">Process</a>
+        <a href="#prototype">Prototype</a>
+        <a href="#statement">Statement</a>
       </aside>
-      <div class="de-soi-case-content sproot-image-only">
-        <img id="problem" src="/images/cases/sproot/sproot%201.jpg" width="1920" height="2102" alt="SPROOT case study screen 1" decoding="async" />
-        <img id="research" src="/images/cases/sproot/sproot%202.jpg" width="1920" height="588" alt="SPROOT case study screen 2" loading="lazy" decoding="async" />
-        <img id="ux-strategy" src="/images/cases/sproot/sproot%203.jpg" width="1920" height="963" alt="SPROOT case study screen 3" loading="lazy" decoding="async" />
-        <img id="wireframes" src="/images/cases/sproot/sproot%204.jpg" width="1920" height="1684" alt="SPROOT case study screen 4" loading="lazy" decoding="async" />
-        <img id="ui-system" src="/images/cases/sproot/sproot%205.jpg" width="1920" height="6708" alt="SPROOT case study screen 5" loading="lazy" decoding="async" />
-        <img id="homepage-breakdown" src="/images/cases/sproot/sproot%206.jpg" width="1920" height="8765" alt="SPROOT case study screen 6" loading="lazy" decoding="async" />
-        <img id="product-experience" src="/images/cases/sproot/sproot%207.jpg" width="1920" height="8475" alt="SPROOT case study screen 7" loading="lazy" decoding="async" />
-        <img id="motion" src="/images/cases/sproot/sproot%208.jpg" width="1920" height="1684" alt="SPROOT case study screen 8" loading="lazy" decoding="async" />
+
+      <div>
+        <section class="portfolio-case-section" id="overview">
+          <span>Overview</span>
+          <h3>From noise to meaningful signals.</h3>
+          <p>The project focuses on transforming chaotic media streams into a structured, manageable system with clear and intuitive visual analytics, helping users quickly identify trends, monitor brand presence, and make informed decisions with confidence.</p>
+          <div class="portfolio-case-grid three">
+            <article class="portfolio-case-card"><h4>Signal</h4><p>Help users understand what needs attention first.</p></article>
+            <article class="portfolio-case-card"><h4>Structure</h4><p>Group metrics, sources, and reports into predictable modules.</p></article>
+            <article class="portfolio-case-card"><h4>Confidence</h4><p>Make monitoring insights feel trustworthy and easy to act on.</p></article>
+          </div>
+        </section>
+
+        <section class="portfolio-case-section" id="role">
+          <span>My role</span>
+          <h3>Led the complete redesign of the SPROOT ecosystem.</h3>
+          <p>I was responsible for the end-to-end redesign of SPROOT, covering both UX and UI. The work included researching the existing brand, building a refreshed visual direction, designing a scalable UI kit, creating product-specific illustrations, and producing supporting marketing and presentation materials.</p>
+          <ul class="portfolio-case-list">
+            <li>Conducted UX research and redesigned key user flows across the platform.</li>
+            <li>Created a new UI kit and visual system aligned with the SPROOT brand.</li>
+            <li>Designed the complete interface for web and mobile experiences.</li>
+            <li>Created custom illustrations and visual assets specifically for SPROOT.</li>
+            <li>Produced social media visuals, presentations, and supporting visual effects.</li>
+          </ul>
+        </section>
+
+        <section class="portfolio-case-section" id="problem">
+          <span>Problem</span>
+          <h3>Three core challenges shaped the redesign.</h3>
+          <p>Research revealed recurring issues in how organizations collect, monitor, and interpret media information. These challenges became the foundation of the redesign process.</p>
+          <div class="portfolio-case-grid three">
+            <article class="portfolio-case-card">
+              <h4>🌐 Fragmented Media Intelligence</h4>
+              <p>Organizations struggle with scattered information across hundreds of media outlets, social platforms, and news portals. Data exists, but it is fragmented, unstructured, and difficult to interpret as a whole.</p>
+            </article>
+
+            <article class="portfolio-case-card">
+              <h4>⚡ Reactive Instead of Proactive Monitoring</h4>
+              <p>Most companies respond to media events only after they escalate. Without real-time tracking and trend visibility, strategic decisions are often delayed.</p>
+            </article>
+
+            <article class="portfolio-case-card">
+              <h4>📊 Complexity of Data Interpretation</h4>
+              <p>Raw data alone does not create insight. Complex analytical tools can overwhelm users, making interpretation slower and reducing decision-making efficiency.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="portfolio-case-section" id="solutions">
+          <span>Solutions</span>
+          <h3>Three solutions addressed the core product challenges.</h3>
+          <div class="portfolio-case-grid three">
+            <article class="portfolio-case-card">
+              <h4>Solution 1</h4>
+              <p>Sproot centralizes multi-source media data into a unified intelligence system. Through structured dashboards, smart filtering, and visual analytics, the platform transforms fragmented information into a coherent, decision-ready overview.</p>
+            </article>
+
+            <article class="portfolio-case-card">
+              <h4>Solution 2</h4>
+              <p>Sproot enables continuous monitoring with dynamic trend visualization and automated alerts. Users can detect spikes, shifts in narrative, and emerging patterns early, allowing proactive, data-driven action rather than reactive response.</p>
+            </article>
+
+            <article class="portfolio-case-card">
+              <h4>Solution 3</h4>
+              <p>The platform applies a clean, minimal interface with clear hierarchy and contextual visualizations. By reducing cognitive load and presenting only actionable metrics, Sproot turns complex datasets into intuitive intelligence.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="portfolio-case-section" id="process">
+          <span>Process</span>
+          <div class="portfolio-case-gallery">
+            <figure>
+              <img src="/images/cases/sproot/sketching.png" width="1920" height="1080" alt="SPROOT sketching process" loading="lazy" decoding="async" />
+            </figure>
+            <figure>
+              <img src="/images/cases/sproot/sproot%205.jpg" width="1920" height="6708" alt="SPROOT design system and screens" loading="lazy" decoding="async" />
+            </figure>
+            <figure>
+              <img src="/images/cases/sproot/sproot%206.jpg" width="1920" height="8765" alt="SPROOT dashboard breakdown" loading="lazy" decoding="async" />
+            </figure>
+            <figure>
+              <img src="/images/cases/sproot/sproot%207.jpg" width="1920" height="1080" alt="SPROOT additional interface view" loading="lazy" decoding="async" />
+            </figure>
+            <figure>
+              <img src="/images/cases/sproot/sproot%208.jpg" width="1920" height="1080" alt="SPROOT additional product screen" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+        </section>
+
+        <section class="portfolio-case-section" id="prototype">
+          <span>Prototype</span>
+          <div class="sproot-prototype-frame">
+            <iframe src="https://marvelapp.com/prototype/g9jeedd?emb=1&amp;iosapp=false&amp;frameless=false" title="SPROOT interactive prototype" width="1512" height="1349" allowTransparency="true" frameborder="0"></iframe>
+          </div>
+        </section>
+
+        <section class="portfolio-case-section" id="statement">
+          <span>Statement</span>
+          <p>The final direction positions Sproot as a clear, structured intelligence workspace: calm enough for daily monitoring, but strong enough to support fast decisions when media signals become urgent.</p>
+          <figure class="sproot-statement-image">
+            <img src="/images/cases/sproot/sproot%204.jpg" width="1920" height="1080" alt="SPROOT brand statement visual" loading="lazy" decoding="async" />
+          </figure>
+        </section>
+
       </div>
     </div>
   </main>
+
+  <footer class="portfolio-case-footer footer privacy-footer">
+    <div class="footer-inner">
+      <div class="footer-brand"><span id="footer-year">2026</span> &copy; MarMel</div>
+      <a class="footer-policy" href="/privacy.html">Privacy Policy</a>
+    </div>
+  </footer>
+
   <script src="/privacy.js?v=105" defer></script>
 </body>
 </html>
