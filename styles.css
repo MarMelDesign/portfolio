@@ -9814,8 +9814,27 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
 }
 
 .case-prototype-frame iframe {
-  height: min(88vw, 1349px);
-  min-height: 620px;
+  height: clamp(420px, 56vw, 760px);
+}
+
+.case-live-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 1.4rem;
+  padding: .74rem 1.05rem;
+  border: 1px solid rgba(42,23,18,.16);
+  border-radius: 999px;
+  background: rgba(104,31,45,.9);
+  color: rgba(255,246,226,.96);
+  font: 700 .8rem/1 var(--mono);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.case-live-link:hover {
+  background: rgba(42,23,18,.92);
 }
 
 .portfolio-case-gallery figcaption {
