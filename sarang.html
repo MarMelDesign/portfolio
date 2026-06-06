@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="SARANG food delivery app UX/UI case study by Mara Melkonyan." />
-  <title>SARANG Case Study | MarMel</title>
+  <meta name="description" content="사랑 - Love food delivery app UX/UI case study by Mara Melkonyan." />
+  <title>사랑 - Love Case Study | MarMel</title>
   <link rel="icon" type="image/png" href="/images/flaticon-180.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,102 +25,183 @@
     <header class="portfolio-case-hero">
       <div>
         <p class="portfolio-case-kicker">Mobile UX/UI case study</p>
-        <h1>SARANG</h1>
-        <p class="portfolio-case-summary">SARANG is a Korean food delivery app concept focused on helping hungry users browse, choose, customize, and order with less friction.</p>
+        <h1>사랑 - Love</h1>
+        <p class="portfolio-case-summary">사랑 - Love is a Korean food delivery app concept focused on helping hungry users browse, choose, customize, and order with less friction.</p>
       </div>
       <ul class="case-tags-rail" aria-label="Project tags">
-        <li>2025</li>
+        <li>2023</li>
         <li>Mobile App</li>
         <li>Figma</li>
         <li>Photoshop</li>
+        <li>Market research</li>
+        <li>Lo-fi wireframes</li>
+        <li>Hi-fi UI</li>
       </ul>
     </header>
 
     <figure class="portfolio-case-visual">
-      <img src="/images/sarang-1200.jpg" width="1200" height="800" alt="SARANG food delivery app preview" decoding="async" />
+      <img src="/public/images/cases/sarang/hero.jpg" width="1200" height="800" alt="사랑 - Love food delivery app preview" decoding="async" />
     </figure>
 
     <div class="portfolio-case-layout">
       <aside class="portfolio-case-rail" aria-label="Case sections">
         <a href="#overview">Overview</a>
-        <a href="#role">Role</a>
-        <a href="#problem">Problem</a>
-        <a href="#solutions">Solutions</a>
+        <a href="#role">Project Brief</a>
+        <a href="#research">Research</a>
         <a href="#process">Process</a>
-        <a href="#prototype">Prototype</a>
+        <a href="#design-solutions">Design Solutions</a>
         <a href="#statement">Statement</a>
       </aside>
 
       <div>
         <section class="portfolio-case-section" id="overview">
           <span>Overview</span>
-          <h3>Food UX has to respect appetite and time.</h3>
-          <p>The project explores a warmer delivery experience where users can move from craving to checkout quickly while still enjoying the visual world of the food.</p>
-          <div class="portfolio-case-grid three">
-            <article class="portfolio-case-card"><h4>Speed</h4><p>Reduce the number of decisions before cart.</p></article>
-            <article class="portfolio-case-card"><h4>Appetite</h4><p>Use visuals and spacing to make dishes feel desirable.</p></article>
-            <article class="portfolio-case-card"><h4>Clarity</h4><p>Keep pricing, timing, and checkout visible.</p></article>
-          </div>
-        </section>
-
-        <section class="portfolio-case-section" id="role">
-          <span>My role</span>
-          <h3>I designed the ordering flow around quick decisions.</h3>
-          <p>I focused on mobile hierarchy, card patterns, dish detail, and checkout clarity so the app feels easy to use when the user is hungry.</p>
-          <ul class="portfolio-case-list">
-            <li>Structured browsing around categories, popular dishes, and fast actions.</li>
-            <li>Designed dish detail and cart modules for easy comparison.</li>
-            <li>Created a warm visual direction with mobile-friendly components.</li>
-          </ul>
-        </section>
-
-        <section class="portfolio-case-section" id="problem">
-          <span>Problem</span>
-          <h3>Food delivery apps can make simple hunger feel like work.</h3>
-          <p>Users need to scan food options quickly, understand details, and complete checkout without repeatedly hunting for price, timing, or customization.</p>
+          <p>The challenge was to simplify the food ordering process while maintaining a visually rich interface capable of handling large amounts of restaurant, menu, and delivery information. Through user-centered design, clear navigation patterns, and a scalable design system, the product delivers a seamless experience from food discovery to doorstep delivery.</p>
           <div class="portfolio-case-grid">
-            <article class="portfolio-case-card"><h4>Choice overload</h4><p>Too many dishes and filters can slow the user down.</p></article>
-            <article class="portfolio-case-card"><h4>Checkout anxiety</h4><p>Delivery time, address, and total need to be obvious before payment.</p></article>
+            <article class="portfolio-case-card"><h4>The reason</h4><p>Online food delivery has already grown significantly over the past few years, however this market has matured due to the overall level of funding and technology penetration. However, things don't end there. There is another key catalyst - increasing convenience and transparency for both end users and merchants. On-demand solutions for a food delivery app provide convenience and transparency for both app users and merchants. Since we are planning to develop an on-demand food delivery app, it was important to create a custom mobile app because this market has been booming over the past few years.</p></article>
+            <article class="portfolio-case-card"><h4>Target Audience</h4><p>The target audience for this app includes busy professionals, students, and families who are looking for a convenient and time-saving way to order food. They are tech-savvy individuals who rely heavily on their smartphones for daily tasks and are comfortable using mobile apps for ordering food.</p></article>
           </div>
         </section>
 
-        <section class="portfolio-case-section" id="solutions">
-          <span>Solutions</span>
-          <h3>Make ordering feel like a warm shortcut.</h3>
+        <section class="portfolio-case-section project-brief-section" id="role">
+          <span>Project Brief</span>
+          <h3>Project Goals</h3>
+          <ol class="portfolio-case-list">
+            <li>To create a user-friendly and intuitive interface that allows users to easily browse and select food items from local restaurants.</li>
+            <li>To implement a seamless ordering and payment process that ensures a smooth and secure transaction for users.</li>
+            <li>To integrate a real-time tracking system that allows users to track the status and location of their food delivery.</li>
+            <li>To provide a rating and review system that allows users to provide feedback on their food delivery experience.</li>
+            <li>To establish partnerships with local restaurants to ensure a wide variety of food options for users to choose from.</li>
+          </ol>
+
+          <h3>Project Constraints</h3>
+          <ol class="portfolio-case-list">
+            <li>The app must be compatible with both iOS and Android devices.</li>
+            <li>The app must adhere to local food safety regulations and guidelines.</li>
+            <li>The app must be able to handle a high volume of concurrent users and orders.</li>
+            <li>The app must have a secure and reliable payment gateway for processing transactions.</li>
+            <li>The app must have a responsive customer support system to handle user inquiries and complaints.</li>
+          </ol>
+
+          <h3>Project Assumptions</h3>
+          <ol class="portfolio-case-list">
+            <li>Users will have access to a stable internet connection for using the app.</li>
+            <li>Users will be willing to pay a delivery fee for the convenience of having food delivered to their doorstep.</li>
+            <li>Partnered restaurants will be able to handle the increased demand for food orders.</li>
+            <li>Users will be comfortable providing their personal and payment information for the purpose of ordering food.</li>
+            <li>Users will find value in the rating and review system and actively participate in providing feedback.</li>
+          </ol>
+
+          <h3>Success Criteria</h3>
+          <ol class="portfolio-case-list">
+            <li>Achieve a minimum of 4-star average rating from users on the app stores.</li>
+            <li>Maintain a customer satisfaction rate of at least 90% based on user feedback.</li>
+            <li>Process and deliver 95% of orders within the estimated delivery time.</li>
+            <li>Increase the number of partnered restaurants by 20% within the first year of launch.</li>
+            <li>Generate a monthly revenue of $50,000 by the end of the first year.</li>
+          </ol>
+
+          <h3>Deliverables</h3>
+          <ol class="portfolio-case-list">
+            <li>Wireframes and mockups of the app interface.</li>
+            <li>Functional prototype of the app with basic features.</li>
+            <li>Fully developed and tested app for both iOS and Android platforms.</li>
+            <li>Documentation and user guide for app usage and administration.</li>
+            <li>Marketing materials and promotional strategies for app launch.</li>
+          </ol>
+
+          <h3>Project phases</h3>
+          <ol class="portfolio-case-list">
+            <li>Discovery phase: Market research, competitor analysis, and user research.</li>
+            <li>Design phase: UI/UX design, wireframing, and prototyping.</li>
+            <li>Development phase: Front-end and back-end development, integration of third-party APIs.</li>
+            <li>Testing phase: Functional testing, usability testing, and bug fixing.</li>
+            <li>Deployment phase: App submission to app stores, server setup, and configuration.</li>
+          </ol>
+        </section>
+
+        <section class="portfolio-case-section" id="research">
+          <span>Research</span>
+          <h3>Market research</h3>
+          <h4>The claim</h4>
           <ul class="portfolio-case-list">
-            <li>Lead with appetite through strong dish imagery.</li>
-            <li>Keep reorder, cart, and checkout actions close.</li>
-            <li>Make customization feel simple and reversible.</li>
-            <li>Use visual warmth without sacrificing mobile usability.</li>
+            <li>It may appear to be a cost, but creating a delivery app is actually a viable investment. The advantages of on-demand delivery apps far outweigh the disadvantages.</li>
+            <li>People are not going to restaurants because they want to save time. They need faster delivery with anticipated delivery times. Providing them with food delivery applications can help solve this problem.</li>
+            <li>Customers can leverage these appealing deals with only tap clicks on their mobile phones, making it easier for them to order food from preferred restaurants.</li>
           </ul>
+          <div class="portfolio-case-gallery">
+            <figure>
+              <img src="/public/images/cases/sarang/research.png" width="1920" height="927" alt="사랑 - Love market research findings" loading="lazy" decoding="async" />
+            </figure>
+            <figure>
+              <img src="/public/images/cases/sarang/analyse.png" width="1920" height="982" alt="사랑 - Love market analysis" loading="lazy" decoding="async" />
+            </figure>
+            <figure>
+              <img src="/public/images/cases/sarang/comments.png" width="1920" height="756" alt="사랑 - Love user comments research" loading="lazy" decoding="async" />
+            </figure>
+          </div>
         </section>
 
         <section class="portfolio-case-section" id="process">
           <span>Process</span>
+          <p>Based on the research insights, I developed a primary persona demonstrating our target users, especially their goals and pain points.</p>
           <div class="portfolio-case-gallery">
             <figure>
-              <img src="/images/sarang-1200.jpg" width="1200" height="800" alt="SARANG app screen preview" loading="lazy" decoding="async" />
+              <img src="/public/images/cases/sarang/persona.png" width="1920" height="1771" alt="사랑 - Love primary persona" loading="lazy" decoding="async" />
             </figure>
             <figure>
-              <img src="/images/straw-1200.jpg" width="1200" height="800" alt="Warm food visual mood" loading="lazy" decoding="async" />
+              <img src="/public/images/cases/sarang/storyboard.png" width="1920" height="1684" alt="사랑 - Love storyboard" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <p>As the next step, I structured the information architecture to organize core app content, navigation, and ordering actions in a clear hierarchy.</p>
+          <div class="portfolio-case-gallery">
+            <figure>
+              <img src="/public/images/cases/sarang/info1.png" width="1920" height="1997" alt="사랑 - Love information architecture map" loading="lazy" decoding="async" />
+            </figure>
+            <figure>
+              <img src="/public/images/cases/sarang/info2.png" width="1920" height="1183" alt="사랑 - Love information architecture details" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <p>To establish a clear and efficient ordering journey, I mapped the complete user flow from product discovery to payment completion. This helped identify key touchpoints, reduce friction across the checkout process, and ensure a seamless experience for both returning and guest users.</p>
+          <div class="portfolio-case-gallery">
+            <figure>
+              <img src="/public/images/cases/sarang/flow.png" width="1920" height="1746" alt="사랑 - Love ordering user flow" loading="lazy" decoding="async" />
             </figure>
           </div>
         </section>
 
-        <section class="portfolio-case-section" id="prototype">
-          <span>Prototype</span>
-          <div class="case-prototype-frame">
-            <img src="/images/sarang-1200.jpg" width="1200" height="800" alt="SARANG prototype preview" loading="lazy" decoding="async" />
+        <section class="portfolio-case-section" id="design-solutions">
+          <span>Design Solutions</span>
+          <h3>Low-fi wireframes</h3>
+          <p>After establishing the flow diagram, I began sketching the low fidelity wireframes of the primary user flow with pen and paper. However, due to limited space, I opted to display only a few of the digital lo-fi wireframes that I created. These initial wireframes were designed with Android users in mind, in line with the Material Design guidelines.</p>
+          <div class="portfolio-case-gallery">
+            <figure>
+              <img src="/public/images/cases/sarang/lofi.png" width="1920" height="1302" alt="사랑 - Love low fidelity wireframes" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <h3>High-fidelity mockups</h3>
+          <p>After finishing the wireframes for the app, I moved on to creating the primary screens. In order to maintain consistency throughout the design, I carefully selected a typeface and color palette, both of which played a crucial role in the overall look and feel of the app. To ensure consistency in the design, I created a UI Style Guide which included an HSL color model for precise color selection, as well as a typography scale to ensure the hierarchy was maintained throughout the project.</p>
+          <div class="portfolio-case-gallery">
+            <figure>
+              <img src="/public/images/cases/sarang/colors.png" width="1920" height="1001" alt="사랑 - Love color palette and UI style guide" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="portfolio-case-gallery">
+            <figure>
+              <img src="/public/images/cases/sarang/design1.png" width="1920" height="1080" alt="사랑 - Love design solution screen set one" loading="lazy" decoding="async" />
+            </figure>
+            <figure>
+              <img src="/public/images/cases/sarang/design2.png" width="1920" height="1080" alt="사랑 - Love design solution screen set two" loading="lazy" decoding="async" />
+            </figure>
           </div>
         </section>
 
         <section class="portfolio-case-section" id="statement">
           <span>Statement</span>
-          <p>The final direction makes SARANG feel warm, direct, and easy to order from, with a mobile system that keeps food and action close together.</p>
+          <p>The final direction makes 사랑 - Love feel warm, direct, and easy to order from, with a mobile system that keeps food and action close together.</p>
           <figure class="case-statement-image">
-            <img src="/images/straw-1200.jpg" width="1200" height="800" alt="SARANG food statement visual" loading="lazy" decoding="async" />
+            <img src="/public/images/cases/sarang/statement.jpg" width="3000" height="2250" alt="사랑 - Love food statement visual" loading="lazy" decoding="async" />
           </figure>
-          <a class="case-live-link" href="https://www.behance.net/gallery/181752253/Food-Delivery-App" target="_blank" rel="noopener">Original Case</a>
         </section>
       </div>
     </div>

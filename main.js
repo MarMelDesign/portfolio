@@ -139,7 +139,7 @@ const memorySlugs = {
   ICRUSH: "icrush",
   "DE SOI": "de-soi",
   VAULTWIN: "vaultwin",
-  SARANG: "sarang",
+  "사랑 - Love": "sarang",
   BRANDING: "branding",
   EVIDENCE: "evidence"
 };
@@ -842,8 +842,8 @@ const caseStudies = {
     images: ["/images/sproot-1-1200.jpg", "/images/icrush-2-1200.jpg"],
     tags: ["Blockchain", "Identity", "UX/UI", "System"]
   },
-  SARANG: {
-    title: "SARANG",
+  "사랑 - Love": {
+    title: "사랑 - Love",
     summary: "A Korean food delivery mobile app designed around appetizing visuals, quick ordering flows, and a warm everyday service experience.",
     note: "Make choosing dinner feel fast, friendly, and a little bit delicious.",
     images: ["/images/sarang-1200.jpg", "/images/straw-1200.jpg"],

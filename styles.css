@@ -9686,6 +9686,16 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   letter-spacing: 0;
 }
 
+.portfolio-case-section h4 {
+  margin: 1.2rem 0 0;
+  color: rgba(42,23,18,.86);
+  font: 800 1.05rem/1.25 var(--body);
+}
+
+.project-brief-section .portfolio-case-list + h3 {
+  margin-top: clamp(2rem, 4vw, 3.2rem);
+}
+
 .portfolio-case-section p {
   margin: 0;
   color: rgba(42,23,18,.68);
@@ -9694,6 +9704,14 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
 
 .portfolio-case-section p + p {
   margin-top: 1rem;
+}
+
+.portfolio-case-gallery + p {
+  margin-top: clamp(1.8rem, 4vw, 3rem);
+}
+
+.portfolio-case-gallery + h3 {
+  margin-top: clamp(1.8rem, 4vw, 3rem);
 }
 
 .portfolio-case-grid {
@@ -9794,11 +9812,37 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   object-fit: contain;
 }
 
+.structured-case-page #research .portfolio-case-gallery {
+  grid-template-columns: 1fr;
+}
+
+.structured-case-page #research .portfolio-case-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  object-fit: contain;
+}
+
+.structured-case-page #design-solutions .portfolio-case-gallery {
+  grid-template-columns: 1fr;
+}
+
+.structured-case-page #design-solutions .portfolio-case-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  object-fit: contain;
+}
+
 .case-prototype-frame,
 .case-statement-image {
   overflow: hidden;
   width: 100%;
-  margin-top: 1.4rem;
+  margin: 1.4rem 0 0;
   border: 1px solid rgba(42,23,18,.12);
   border-radius: 24px;
   background: rgba(255,250,237,.56);
