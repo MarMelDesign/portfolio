@@ -9680,10 +9680,20 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
 }
 
 .portfolio-case-section h3 {
-  margin: 0 0 1rem;
+  margin: 0 0 clamp(1.7rem, 3.2vw, 2.4rem);
   color: var(--espresso);
   font: 400 clamp(1.8rem, 3.4vw, 3.4rem)/.98 var(--display);
   letter-spacing: 0;
+}
+
+.portfolio-case-section p + h3,
+.portfolio-case-section .portfolio-case-list + h3,
+.portfolio-case-section .portfolio-case-grid + h3,
+.portfolio-case-section .vaultwin-logo-showcase + h3,
+.portfolio-case-section .vaultwin-branding-gallery + h3,
+.portfolio-case-section .case-prototype-frame + h3,
+.portfolio-case-section .case-statement-image + h3 {
+  margin-top: clamp(2rem, 5vw, 3.8rem);
 }
 
 .portfolio-case-section h4 {
@@ -9795,6 +9805,42 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   min-height: 260px;
   max-height: 620px;
   object-fit: cover;
+}
+
+.vaultwin-logo-showcase {
+  overflow: hidden;
+  width: 100%;
+  margin: clamp(1.8rem, 4vw, 3rem) 0 0;
+  border: 1px solid rgba(42,23,18,.12);
+  border-radius: 18px;
+  background: rgba(255,250,237,.56);
+}
+
+.vaultwin-logo-showcase img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.vaultwin-branding-gallery {
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.8rem);
+  margin-top: clamp(1.8rem, 4vw, 3rem);
+}
+
+.vaultwin-branding-gallery figure {
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
+  border: 1px solid rgba(42,23,18,.12);
+  border-radius: 18px;
+  background: rgba(255,250,237,.56);
+}
+
+.vaultwin-branding-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .sproot-page #process .portfolio-case-gallery,
