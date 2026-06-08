@@ -9697,7 +9697,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
 }
 
 .portfolio-case-section h4 {
-  margin: 1.2rem 0 0;
+  margin: clamp(1.4rem, 3vw, 2rem) 0 .7rem;
   color: rgba(42,23,18,.86);
   font: 800 1.05rem/1.25 var(--body);
 }
@@ -9716,12 +9716,66 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   margin-top: 1rem;
 }
 
+.case-text-image-row {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(280px, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.2rem);
+  align-items: center;
+}
+
+.case-text-image-row figure {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid rgba(42,23,18,.13);
+  border-radius: 12px;
+  background: rgba(255,255,255,.34);
+  box-shadow: 0 20px 52px rgba(42,23,18,.1);
+}
+
+.case-text-image-row img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.case-section-detail-block {
+  margin-top: clamp(1.6rem, 4vw, 2.8rem);
+}
+
+.case-section-detail-block h3 {
+  margin: clamp(1.8rem, 4vw, 2.8rem) 0 1rem;
+  font-size: clamp(1.45rem, 2.8vw, 2.4rem);
+}
+
+.case-section-detail-block h3:first-child {
+  margin-top: 0;
+}
+
+.case-section-detail-block .portfolio-case-list {
+  margin-top: .85rem;
+}
+
+.case-section-detail-block .portfolio-case-list + p,
+.case-section-detail-block p + .portfolio-case-list {
+  margin-top: 1rem;
+}
+
 .portfolio-case-gallery + p {
   margin-top: clamp(1.8rem, 4vw, 3rem);
 }
 
 .portfolio-case-gallery + h3 {
   margin-top: clamp(1.8rem, 4vw, 3rem);
+}
+
+.case-statement-image + p,
+.case-prototype-frame + p {
+  margin-top: clamp(1.6rem, 4vw, 2.6rem);
+}
+
+.case-statement-image + h4,
+.case-prototype-frame + h4 {
+  margin-top: clamp(1.7rem, 4vw, 2.8rem);
 }
 
 .portfolio-case-grid {
@@ -9983,7 +10037,8 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   }
 
   .portfolio-case-grid,
-  .portfolio-case-grid.three {
+  .portfolio-case-grid.three,
+  .case-text-image-row {
     grid-template-columns: 1fr;
   }
 }
