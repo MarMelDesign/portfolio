@@ -140,7 +140,7 @@ const memorySlugs = {
   "DE SOI": "de-soi",
   VAULTWIN: "vaultwin",
   "사랑 - Love": "sarang",
-  BRANDING: "branding",
+  "PRODUCT INFOGRAPHICS": "branding",
   EVIDENCE: "evidence"
 };
 
@@ -849,27 +849,12 @@ const caseStudies = {
     images: ["/images/sarang-1200.jpg", "/images/straw-1200.jpg"],
     tags: ["Mobile app", "Food delivery", "Korean app", "UX/UI"]
   },
-  BRANDING: {
-    title: "BRANDING PROJECTS",
-    summary: "A collected folder of identity systems, brand atmospheres, and visual directions.",
-    note: "Three small worlds gathered into one messy, useful archive.",
-    images: ["/images/icrush-1-1000.png", "/images/sarang-1200.jpg"],
-    tags: ["Branding", "Identity", "Moodboards", "Visual systems"],
-    mood: "branding",
-    folders: [
-      {
-        label: "identity_01",
-        url: "https://www.behance.net/gallery/243719865/iCrush-WEB3-BRAND-IDENTITY-UXUI-DESIGN"
-      },
-      {
-        label: "mood_02",
-        url: "https://www.behance.net/gallery/162852245/-Love"
-      },
-      {
-        label: "system_03",
-        url: "https://www.behance.net/melkonyan_designer"
-      }
-    ]
+  "PRODUCT INFOGRAPHICS": {
+    title: "Product Infographics",
+    summary: "Over the years I created product listings, infographics, A+ content, and conversion-focused visuals for Amazon and Wildberries across multiple product categories.",
+    note: "50+ brands across marketplace pages, product stories, and sales-focused visual systems.",
+    images: ["/images/cases/branding/1.jpg", "/images/cases/branding/2.jpg"],
+    tags: ["50+ Brands", "Amazon", "Wildberries", "Ozon"]
   },
   EVIDENCE: {
     title: "evidence_folder",
