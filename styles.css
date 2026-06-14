@@ -9929,7 +9929,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   min-height: clamp(180px, 26vw, 270px);
   background:
     linear-gradient(135deg, rgba(18,29,71,.1), rgba(104,31,45,.2)),
-    url("/public/images/cases/de-soi/hero.png") center/cover;
+    url("/images/cases/de-soi/hero.png") center/cover;
 }
 
 .case-feature-video-media::before {
@@ -10033,7 +10033,7 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   min-height: clamp(180px, 24vw, 260px);
   background:
     linear-gradient(135deg, rgba(104,31,45,.08), rgba(18,29,71,.18)),
-    url("/public/images/cases/de-soi/hero.png") center/cover;
+    url("/images/cases/de-soi/hero.png") center/cover;
 }
 
 .case-social-preview-copy {
