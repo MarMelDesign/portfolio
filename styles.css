@@ -7620,6 +7620,32 @@ body.cursor-ready:has(.notebook-explorer.is-exploring) .cursor {
   font: 700 1.3rem / 1.15 var(--hand);
 }
 
+.resume-ibm-badge {
+  position: relative;
+  z-index: 3;
+  display: block;
+  width: clamp(112px, 16vw, 156px);
+  margin: clamp(2.2rem, 6vw, 4rem) auto 0;
+  border-radius: 50%;
+  transition: transform .35s cubic-bezier(.18,.9,.18,1), filter .35s ease;
+}
+
+.resume-ibm-badge:hover {
+  filter: drop-shadow(0 18px 28px rgba(42,23,18,.18));
+  transform: translateY(-5px) rotate(-2deg);
+}
+
+.resume-ibm-badge:focus-visible {
+  outline: 2px solid rgba(104,31,45,.68);
+  outline-offset: 6px;
+}
+
+.resume-ibm-badge img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .resume-paper-one {
   left: -5%;
   top: 13%;
